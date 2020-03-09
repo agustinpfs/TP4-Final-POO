@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor. *1*
+-->
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	
+	<style type="text/css">
+	
+		input {
+			width: 200px;
+			margin-bottom: 1.5em;
+			display: block
+		}
+	</style>
+
+</head>
+
+
+<body>
+        <div>
+            <h1>Nuevo Usuario</h1>
+        </div>
+
+        <div>
+            <form  action="#" th:action="@{/users}" th:object="${user}" method="post">
+                 <div>
+                 	<label for="name">Nombre</label>
+                    <input id="firstname" name="firstname" type="text" th:field="*{firstName}" required/> 
+                    
+                </div>
+                <div>
+                	<label for="name">Apellido</label>
+                    <input   id="lastname" name="lastname" type="text" th:field="*{lastName}" required/> 
+                    
+                </div>
+                <div>
+                	<label for="name">E-mail</label>
+                    <input   id="email" name="email" type="email" th:field="*{email}" required/> 
+                    
+                </div>
+                <div>
+                	<label for="name">Contraseña</label>
+                    <input id="password" name="password" type="password" th:field="*{password}" required/> 
+                    
+                </div>
+               
+
+                <p>
+                    <button class="button" type="submit" name="newUser">Crear</button>
+                </p>
+
+
+            </form>
+        </div>
+      
+    </body>
+</html>
+
+

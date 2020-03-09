@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+   
+    <head>
+        <title>Pagos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           </head>
+    <body>
+        
+            
+        <div>
+           <h1><img src="/img/wagu_1-0.png" width="100" height="50" align="center"><br>Datos del pago</br></h1>
+            <h5>
+                Por favor ingrese los datos de la tarjeta para registrarse
+            </h5>
+            
+        </div>
+    <center>
+        <form action="#" th:action="@{/payments/{eventId}(eventId=${event.id})}" th:object="${payment}" method="post" class="go-bottom">
+               
+            
+             <div>
+                <input   id="cardName" name="cardName" type="text" field="cardName" required/> 
+                <label for="cardName">Nombre de la tarjeta</label>
+            </div>
+             <div>
+                <input   id="cardNumber" name="cardNumber" type="text" field="cardNumber" required/> 
+                <label for="cardName">Número de la tarjeta</label>
+            </div>
+           
+            <button class="button" type="submit" name="newPayment">Pagar</button>
+          
+            <a class="button" th:href="@{/events}">Volver</a>
+        </form>
+    </center>
+   
+    </body>
+</html>

@@ -1,4 +1,4 @@
-package com.tp4Poo.Entities;
+package com.tp4Poo.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;

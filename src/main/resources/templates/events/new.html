@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Nuevo Evento</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
+    </head>
+    <body>
+         
+        <div>
+            <h1><img src="https://drive.google.com/uc?id=1WFufuKPZPW6Nw51VjUSiuDBE2GNg_81Q" width="200"
+     height="100" ><br>Nuevo Evento</h1>
+            <h5>Aquí podrá crear sus eventos.</h5>   
+        </div>
+    <center>
+        <form  action="#" th:action="@{/events}" th:object="${event}" method="post" class="go-bottom">
+           <h6>Datos del evento</h6>
+
+            <div>
+                <input id="eventName" name="eventName" type="text" field="eventName" required/> 
+                <label for="name">Nombre del evento</label>
+            </div>
+            <div>
+                <input   id="lugar" name="lugar" type="text" th:field="*{lugar}" required/> 
+                <label for="lugar">Lugar del evento</label>
+            </div>
+            <div>
+                <input   id="capacity" name="capacity" type="text" th:field="*{capacity}" required/> 
+                <label for="capacity">Capacidad</label>
+            </div>
+            <div>
+                <input   id="cost" name="cost" type="text" th:field="*{cost}" required/> 
+                <label for="cost">Costo</label>
+            </div>
+
+        
+         <!--<form class="go-bottom" action="#" th:action="@{/events}" th:object="${event}" method="post">-->
+
+
+            <h6>Fechas</h6>
+            <div>	
+                <input   id="eventDate" name="eventDate" type="date" th:field="*{eventDate}" required/> 
+                <label for="eventDate">Fecha del evento</label>
+            </div>
+            <div>	
+                <input   id="startRegistrations" name="startRegistrations" type="date" th:field="*{startRegistrations}" required/> 
+                <label for="eventDate">Inicio registracion.</label>
+            </div>
+            <div>	
+                <input   id="endRegistrations" name="endRegistrations" type="date" th:field="*{endRegistrations}" required/> 
+                <label for="eventDate">Fin registracion.</label>
+            </div>
+            <div >	
+                <h6 align="center"> Evento privado</h6>
+                <input type="checkbox" th:field="*{privateEvent}" />
+
+            </div>
+            <div>
+                
+            <button class="button" type="submit" name="newEvent">Crear</button>
+            <a class="button" href="/events">Volver</a>
+        </div>
+        </form>
+    </center>
+    </body>
+</html>

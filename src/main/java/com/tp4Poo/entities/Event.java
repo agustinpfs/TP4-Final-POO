@@ -1,4 +1,4 @@
-package com.tp4Poo.Entities;
+package com.tp4Poo.entities;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,12 +11,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="events")
+@NamedQuery(name = "Event.findEventsByOwnerId",
+query = "SELECT e FROM Event e WHERE e.owner.id =: ownerId ORDER BY e.eventDate ASC"
+
+)
+
+@NamedQuery(name = "Event.findAllEvents",
+query = "SELECT e FROM Event e ORDER BY e.eventDate ASC"
+)
+
+@NamedQuery(name = "Event.findRegistrationsByEventId",  // Esto es para cambiar la coleccion por consulta, preguntar
+query = "SELECT r FROM Registration r WHERE r.event.id =: eventId"
+)
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="es">
+    <head>
+        <title>Edit Event</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
+    </head>
+
+
+    <body>
+
+        <div>
+            <h1><img src="/img/wagu_1-0.png" width="100"
+                     height="50" align="center"><br>Edicion de evento.</h1>
+            <h5>Puede modificar los siguientes datos</h5>   
+        </div>
+
+    <center>
+        <form action="#" th:action="@{/events/{id}/update(id=${event.id})}" th:object="${event}" method="post" class="go-bottom">
+
+            <h6>Datos del evento</h6>
+
+            <div>                             
+                <input   id="eventName" name="eventName" type="text" th:field="*{eventName}" required/> 
+                <label for="name">Nombre del evento</label>
+            </div>
+
+            <div>
+                <input   id="lugar" name="lugar" type="text" th:field="*{lugar}" required/> 
+                <label for="lugar">Lugar del evento</label>
+            </div>
+            <div>
+                <input   id="capacity" name="capacity" type="text" th:field="*{capacity}" required/> 
+                <label for="capacity">Capacidad</label>
+            </div>
+            <div>
+                <input   id="cost" name="cost" type="text" th:field="*{cost}" required/> 
+                <label for="cost">Costo</label>
+            </div>
+
+
+            <!--<form class="go-bottom" action="#" th:action="@{/events}" th:object="${event}" method="post">-->
+
+
+            <h6>Fechas</h6>
+            <div>	
+                <input   id="eventDate" name="eventDate" type="date" th:field="*{eventDate}" required/> 
+                <label for="eventDate">Fecha del evento</label>
+            </div>
+            <div>	
+                <input   id="startRegistrations" name="startRegistrations" type="date" th:field="*{startRegistrations}" required/> 
+                <label for="eventDate">Inicio registracion.</label>
+            </div>
+            <div>	
+                <input   id="endRegistrations" name="endRegistrations" type="date" th:field="*{endRegistrations}" required/> 
+                <label for="eventDate">Fin registracion.</label>
+            </div>
+            <div >	
+                <h6 align="center"> Evento privado</h6>
+                <input type="checkbox" th:field="*{privateEvent}" />
+
+            </div>
+            <div>
+                <button class="button" type="submit" name="edit_event">Actualizar</button>
+                <a th:href="@{/events/{id}/eventDetails(id=${event.id})}"class="button">Volver</a>
+            </div>
+
+        </form>
+    </center>
+</body>
+</html>

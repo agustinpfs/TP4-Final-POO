@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Edit User</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Edit user</div>
+        <form action="#" th:action="@{/users/{id}/update(id=${user.id})}" th:object="${user}" method="post">
+            First name:<input type="text" th:field="*{firstName}" />
+            Last Name:<input type="text" th:field="*{lastName}" />
+            <button type="submit" name="edit">Update</button>
+        </form>
+    </body>
+</html>

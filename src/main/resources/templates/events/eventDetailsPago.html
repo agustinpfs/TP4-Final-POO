@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="es">
+
+    <head>
+        <title>Detalles de los eventos Gratuitos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+
+    </head>
+    <body>
+
+
+        <div>
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="/events">Eventos</a>
+                <h5>Pagina donde se muestran todos los eventos</h5>
+                <a href="/events/new">Nuevo Evento</a>
+                <h5>Crea nuevos eventos definiendo difernetes parámetros.</h5>
+                <a href="/events/myEvents">Mis eventos</a>
+                <h5>Administra los eventos que has creado.</h5>
+                <a href="/invites/myInvites">Mis Invitaciones</a>
+                <h5>Pagina de mis invitaciones.</h5>
+                <a href="/logout">Salir</a>
+                <img src="/img/wagu_1-0.png" width="50" height="25" align="right">			
+            </div>
+            <span style="font-size:30px;cursor:pointer;color:#ffffff" onclick="openNav()">&#9776; Menú</span>
+            <script>
+                function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                }
+
+                function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                }
+            </script>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+
+                <h1><img src="/img/wagu_1-0.png" width="100" height="50" align="center"><br>Detalles de los eventos<br><h7> Usuario Actual:  </h7><h7 th:text="${currentUser.email}"></h7></h1>
+
+                <thead>
+                    <tr>
+                        <th>Nombre del Evento</th>
+                        <th>Fecha del Evento</th>
+                        <th>Inicio de Registro</th>
+                        <th>Fin de Registo</th>
+                        <th>Lugar</th>
+                        <th>Disponibilidad</th>
+                        <th>Tipo de Evento</th>
+                        <th>Costo</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div>
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                    <tr th:object="${event}">
+                        <td th:text="${event.eventName}"></td>
+                        <td th:text="${event.eventDate}"></td>
+                        <td th:text="${event.startRegistrations}"></td>
+                        <td th:text="${event.endRegistrations}"></td>
+                        <td th:text="${event.lugar}"></td>
+                        <td th:text="${event.capacity}"></td>
+                        <td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
+                        <td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
+
+
+                        <td><a class="button" th:href="@{/events/{id}/edit(id=${event.id})}">Editar</a></td>
+                        <td> <a th:href="@{/invites/{id}/invite(id=${event.id})}" class="button">Invitar</a></td>
+                        <td><a class="button" th:href="@{/events/{id}/delete(id=${event.id})}">Borrar</a></td>
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+ 
+
+        
+        
+        
+        
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                <h1 >Listado de Inscriptos </h1>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>E-mail</th>
+                        <th> Nombre de la tarjeta</th>
+                        <th>Número de la tarjeta</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+
+                    <tr th:each="payment : ${payments}">
+                        <td th:text="${payment.owner.firstName}"></td>
+                        <td th:text="${payment.owner.lastName}"></td>
+                        <td th:text="${payment.owner.email}"></td>
+                        <td th:text="${payment.cardName}"></td>
+                        <td th:text="${payment.cardNumber}"></td>    
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <h1 >Listado de Invitaciones</h1>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>E-mail</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                    <tr th:each="invite : ${invites}">
+                        <td th:text="${invite.user.firstName}"></td>
+                        <td th:text="${invite.user.lastName}"></td>
+                        <td th:text="${invite.user.email}"></td>
+                        <td> <a class="button" th:href="@{/invites/{id}/delete(id=${invite.id})}">Borrar</a></td>
+                    </tr>
+                </tbody>
+
+            </table>        
+        </div>
+    </body>
+</html>

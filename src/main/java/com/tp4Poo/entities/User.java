@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tp4Poo.Entities;
+package com.tp4Poo.entities;
 
 import java.util.Arrays;
 import java.util.Collection;

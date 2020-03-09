@@ -1,0 +1,106 @@
+body{
+    background: -webkit-linear-gradient(left, rgba(93,82,81,1) 0%, rgba(61,61,61,1) 48%, rgba(41,41,41,1) 53%, rgba(0,0,0,1) 100%);  
+}
+h3 {
+  color: #5a5757;
+  font-size: 12px;
+  toop: 0;
+  margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+form {
+  width: 320px;
+  margin: 20px;
+}
+form > div {
+  position: relative;
+  overflow: hidden;
+}
+form input,
+form textarea {
+  width: 100%;
+  border: 2px solid gray;
+  background: none;
+  position: relative;
+  top: 0px;
+  left: 0;
+  z-index: 1;
+  padding: 8px 0px;
+  outline: 0;
+  color: white;
+}
+form input:valid,
+form textarea:valid {
+  background: none;
+}
+form input:focus,
+form textarea:focus {
+  border-color: #988345;
+}
+form input:focus + label,
+form textarea:focus + label {
+  background: #988345;
+  color: white;
+  font-size: 70%;
+  padding: 1px 6px;
+  z-index: 2;
+  text-transform: uppercase;
+}
+form label {
+  -webkit-transition: right 0.2s, left 0.2s;
+  transition: right 0.2s, left 0.2s;
+  position: absolute;
+  color: #988345;
+  padding: 0px 80px;
+}
+form textarea {
+  display: block;
+  resize: vertical;
+}
+form.go-bottom input,
+form.go-bottom textarea {
+  padding: 12px 12px 12px 12px;
+}
+form.go-bottom label {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+form.go-bottom input:focus,
+form.go-bottom textarea:focus {
+  padding: 4px 6px 20px 6px;
+}
+form.go-bottom input:focus + label,
+form.go-bottom textarea:focus + label {
+  top: 100%;
+  margin-top: -16px;
+}
+form.go-right label {
+  top: 2px;
+  right: 100%;
+  width: 100%;
+  margin-right: -100%;
+  bottom: 2px;
+}
+form.go-right input:focus + label,
+form.go-right textarea:focus + label {
+  right: 0;
+  margin-right: 0;
+  width: 40%;
+  padding-top: 5px;
+}
+input[type="checkbox"] {
+  background: #988345;
+  -webkit-transform: scale(2);
+          transform: scale(2);
+  padding: 10px;
+}
+.checkboxtext {
+  /* Checkbox text */
+  background: #988345;
+  font-size: 110%;
+  display: inline;
+}
