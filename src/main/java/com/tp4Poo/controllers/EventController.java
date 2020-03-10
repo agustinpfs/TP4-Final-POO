@@ -1,10 +1,15 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.tp4Poo.controllers;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -17,16 +22,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tp4Poo.entities.Event;
-import com.tp4Poo.entities.Invite;
-import com.tp4Poo.entities.Payment;
-import com.tp4Poo.entities.Registration;
-import com.tp4Poo.services.EventService;
-import com.tp4Poo.services.InviteService;
-import com.tp4Poo.services.PaymentService;
-import com.tp4Poo.services.SessionService;
+import com.unnoba.eventos.entities.Event;
+import com.unnoba.eventos.entities.Invite;
+import com.unnoba.eventos.entities.Payment;
+import com.unnoba.eventos.entities.Registration;
+import com.unnoba.eventos.entities.User;
+import com.unnoba.eventos.services.*;
 
-
+@SuppressWarnings("unused")
 @Controller
 @RequestMapping("/events")
 public class EventController {
@@ -35,41 +38,42 @@ public class EventController {
     private EventService eventService;
 
     @Autowired
-    private SessionService sessionService;
+    private UserLoggedInService uLoggedIn;
 
     @Autowired
     private PaymentService paymentService;
 
     @Autowired
     private InviteService inviteService;
+    
 
     @GetMapping
-    public String index(Model model) {
-        List<Event> events = eventService.events();
+    public String events(Model model) {
+        List<Event> events = eventService.retrieveAllEvents();
         model.addAttribute("events", events);
-        model.addAttribute("currentUser", sessionService.getCurrentUser());
-        return "events/index";
+        model.addAttribute("currentUser", uLoggedIn.loggedIn());
+        return "events/events";
     }
 
     @GetMapping("/myEvents")
     public String myEvents(Model model) {
-        List<Event> events = eventService.findEventsByOwnerId(sessionService.getCurrentUser().getId());
+    	User u= uLoggedIn.loggedIn();
+    	List<Event> events = eventService.findEventById(u.getId());
         model.addAttribute("events", events);
-        model.addAttribute("currentUser", sessionService.getCurrentUser());
+        model.addAttribute("currentUser", u);
         return "events/myEvents";
     }
 
     @GetMapping("/new")
     public String eventNew(Model model) {
         model.addAttribute("event", new Event());
-        
         return "events/new";
     }
 
     @PostMapping
-    public String create(@ModelAttribute Event event, Model model) throws Exception {
+    public String createEvent(@ModelAttribute Event event, Model model) throws Exception {
         try {
-            eventService.create(event);
+            eventService.createEvent(event);
             return "redirect:/events/myEvents";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -79,18 +83,19 @@ public class EventController {
     }
 
     @GetMapping("/{id}/delete")
-    public String delete(Model model, @PathVariable("id") Long id) throws Exception {
+    public String deleteEvent(Model model, @PathVariable("id") Long id) throws Exception {
         try {
-            Event event = eventService.find(id);
-            if (Objects.equals(sessionService.getCurrentUser().getId(), event.getOwner().getId())) {    // Controlo que sea el propio usuario 
-                if (inviteService.findByEvent(event).isEmpty()) {
-                    eventService.delete(id);
+        	User u= uLoggedIn.loggedIn();
+            Event event = eventService.findEvent(id);
+            if (event.getOwner().getId().equals(u.getId())) { 
+                if (inviteService.findInviteByEvent(event).isEmpty()) {
+                    eventService.deleteEvent(id);
                     return "redirect:/events/myEvents";
                 }
-                throw new Exception("No se puede Borrar por que el evento posee invitaciones");
+                throw new Exception("Cannot be deleted because there are invitations");
             }
 
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Invalid User");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
@@ -98,14 +103,15 @@ public class EventController {
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable Long id, Model model) throws Exception {
+    public String editEvent(@PathVariable Long id, Model model) throws Exception {
         try {
-            Event event = eventService.find(id);
-            if (Objects.equals(sessionService.getCurrentUser().getId(), event.getOwner().getId())) {  // Controlo que sea el propio usuario 
+        	User u= uLoggedIn.loggedIn();
+            Event event = eventService.findEvent(id);
+            if (event.getOwner().getId().equals(u.getId())) {
                 model.addAttribute("event", event);
                 return "events/edit";
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Invalid User "+ u);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
@@ -113,15 +119,16 @@ public class EventController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(Model model, @PathVariable Long id, @ModelAttribute Event event) throws Exception {
+    public String updateEvent(Model model, @PathVariable Long id, @ModelAttribute Event event) throws Exception {
         try {
-            Event oldEvent = eventService.find(id);
-            if (Objects.equals(sessionService.getCurrentUser().getId(), oldEvent.getOwner().getId())) {    // Controlo que sea el propio usuario 
-                eventService.update(id, event);
+        	User u= uLoggedIn.loggedIn();
+            Event temp = eventService.findEvent(id);
+            if (temp.getOwner().getId().equals(u.getId())) { 
+                eventService.updateEvent(id, event);
                 return "redirect:/events/myEvents";
             }
 
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Invalid User");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
@@ -129,32 +136,32 @@ public class EventController {
     }
 
     @GetMapping("/{id}/eventDetails")
-    public String detail(@PathVariable Long id, Model model) throws Exception {
+    public String eventDetails(@PathVariable Long id, Model model) throws Exception {
         try {
-            Event event = eventService.find(id);
-            if (Objects.equals(sessionService.getCurrentUser().getId(), event.getOwner().getId())) {  // Controlo que sea el propio usuario 
-                List<Invite> invites = inviteService.findByEvent(event);
+        	User u= uLoggedIn.loggedIn();
+            Event event = eventService.findEvent(id);
+            if (event.getOwner().getId().equals(u.getId())) {   
+                List<Invite> invites = inviteService.findInviteByEvent(event);
                 model.addAttribute("event", event);
                 model.addAttribute("invites", invites);
-                model.addAttribute("currentUser", sessionService.getCurrentUser());
+                model.addAttribute("currentUser", u);
 
                 if (event.getCost() > 0) {
-                    List<Payment> payments = paymentService.findByEvent(event);
+                    List<Payment> payments = paymentService.findPaymentByEvent(event);
                     model.addAttribute("payments", payments);
-                    return "events/eventDetailsPago";
+                    return "events/eventPay";
                 }
                 List<Registration> registrations = event.getRegistrations();
                 model.addAttribute("registrations", registrations);
-                return "events/eventDetailsGratis";
+                return "events/eventFree";
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Invalid User");
 
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
         }
     }
-        // Ver si se puede poner en AppConfiguration o si se puede hacer otra cosa
         @InitBinder
         public void initBinder
         (final WebDataBinder binder

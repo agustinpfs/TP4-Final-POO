@@ -5,10 +5,11 @@
  */
 package com.tp4Poo.controllers;
 
-
 import java.util.List;
 import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,18 +17,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tp4Poo.entities.Event;
-import com.tp4Poo.entities.Invite;
-import com.tp4Poo.entities.Payment;
-import com.tp4Poo.entities.Registration;
-import com.tp4Poo.entities.User;
-import com.tp4Poo.services.EventService;
-import com.tp4Poo.services.InviteService;
-import com.tp4Poo.services.PaymentService;
-import com.tp4Poo.services.SessionService;
-import com.tp4Poo.services.UserService;
+import com.unnoba.eventos.entities.Event;
+import com.unnoba.eventos.entities.Invite;
+import com.unnoba.eventos.entities.User;
+import com.unnoba.eventos.services.EventService;
+import com.unnoba.eventos.services.InviteService;
+import com.unnoba.eventos.services.UserLoggedInService;
+import com.unnoba.eventos.services.UserService;
 
-
+/**
+ *
+ * @author guillermo
+ */
 @Controller
 @RequestMapping("/invites")
 public class InviteController {
@@ -42,17 +43,18 @@ public class InviteController {
     private InviteService inviteService;
 
     @Autowired
-    private SessionService sessionService;
-
+    private UserLoggedInService uLoggedIn;
+    
     @GetMapping("/{eventId}/{userId}/sendInv")
     public String sendInv(Model model, @PathVariable Long eventId, @PathVariable Long userId) throws Exception {
         try {
-            Event event = eventService.find(eventId);
-            if (Objects.equals(event.getOwner().getId(), sessionService.getCurrentUser().getId())) {
+        	User u= uLoggedIn.loggedIn();
+            Event event = eventService.findEvent(eventId);
+            if (event.getOwner().getId().equals(u.getId())) {
                 Invite i = new Invite();
                 i.setEvent(event);
-                i.setUser(userService.find(userId));
-                inviteService.create(i);
+                i.setUser(userService.findUser(userId));
+                inviteService.createInvite(i);
                 return "redirect:/invites/{eventId}/invite";
             }
             throw new Exception("Permiso denegado usuario invalido");
@@ -65,40 +67,42 @@ public class InviteController {
     @GetMapping("/{eventId}/invite")
     public String invite(Model model, @PathVariable Long eventId) throws Exception {
         try {
-            if (Objects.equals(eventService.find(eventId).getOwner().getId(), sessionService.getCurrentUser().getId())) {
-                List<User> users = userService.users();
+        	User u= uLoggedIn.loggedIn();
+            if (eventService.findEvent(eventId).getOwner().getId().equals(u.getId())) {
+                List<User> users = userService.retrieveAllUsers();
                 model.addAttribute("users", users);
                 model.addAttribute("eventId", eventId);
                 return "invites/inviteUsers";
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Invalid User");
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute(e.getMessage());
             return "/error/error";
         }
     }
 
     @GetMapping("/myInvites")
     public String invite(Model model) {
-        User user = sessionService.getCurrentUser();
-        List<Invite> invites = inviteService.findByUser(user);
+    	User u= uLoggedIn.loggedIn();
+        List<Invite> invites = inviteService.findInviteByUser(u);
         model.addAttribute("invites", invites);
-        model.addAttribute("currentUser", sessionService.getCurrentUser());
+        model.addAttribute("currentUser", u);
         return "invites/myInvites";
     }
 
     @GetMapping("/{inviteId}/delete")
     public String delete(Model model, @PathVariable Long inviteId, HttpServletRequest request) throws Exception {
         try {
-            Invite inv = inviteService.find(inviteId);
-            if ((sessionService.getCurrentUser().getId() == inv.getUser().getId()) || (sessionService.getCurrentUser().getId() == inv.getEvent().getOwner().getId())) {    // Controlo que sea el user de invite o el user que la creo (dueño del evento)
-                inviteService.delete(inviteId);
+        	User u= uLoggedIn.loggedIn();
+            Invite temp = inviteService.findInvite(inviteId);
+            if ((temp.getUser().getId().equals(u)) || (temp.getEvent().getOwner().getId().equals(u))) {
+                inviteService.deleteInvite(inviteId);
                 String referer = request.getHeader("Referer");
                 return "redirect:" + referer;
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("invalid User");
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute(e.getMessage());
             return "/error/error";
         }
     }

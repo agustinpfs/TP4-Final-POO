@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.tp4Poo.controllers;
 
-
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,18 +14,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tp4Poo.entities.Event;
-import com.tp4Poo.entities.Invite;
-import com.tp4Poo.entities.Payment;
-import com.tp4Poo.entities.Registration;
-import com.tp4Poo.entities.User;
-import com.tp4Poo.services.EventService;
-import com.tp4Poo.services.InviteService;
-import com.tp4Poo.services.PaymentService;
-import com.tp4Poo.services.RegistrationService;
-import com.tp4Poo.services.SessionService;
-import com.tp4Poo.services.UserService;
+import com.unnoba.eventos.entities.Event;
+import com.unnoba.eventos.entities.Invite;
+import com.unnoba.eventos.entities.Registration;
+import com.unnoba.eventos.entities.User;
+import com.unnoba.eventos.services.EventService;
+import com.unnoba.eventos.services.InviteService;
+import com.unnoba.eventos.services.RegistrationService;
+import com.unnoba.eventos.services.UserLoggedInService;
 
+/**
+ *
+ * @author root
+ */
 @Controller
 @RequestMapping("/registrations")
 public class RegistrationController {
@@ -32,23 +38,23 @@ public class RegistrationController {
     private EventService eventService;
 
     @Autowired
-    private SessionService sessionService;
+    private UserLoggedInService uLoggedIn;
 
     @Autowired
     private InviteService inviteService;
 
     @GetMapping("/myRegistrations")
     public String registrate(Model model) {
-        Long id = sessionService.getCurrentUser().getId();
-        List<Registration> registrations = registrationService.findByUser(id);
+    	User u= uLoggedIn.loggedIn();
+        List<Registration> registrations = registrationService.findRegistrationByUser(u.getId());
         model.addAttribute("registrations", registrations);
-        model.addAttribute("currentUser", sessionService.getCurrentUser());
+        model.addAttribute("LoggedinUser", u);
         return "registrations/myRegistrations";
     }
 
     @GetMapping("/{id}/registrate")
     public String registrate(@PathVariable Long id, Model model) {
-        Event e = eventService.find(id);
+        Event e = eventService.findEvent(id);
         model.addAttribute("event", e);
         return "registrations/registrate";
     }
@@ -57,21 +63,21 @@ public class RegistrationController {
 
     public String confirmRegistration(@PathVariable Long id, Model model) throws Exception {
         try {
-
-            Event e = eventService.find(id);
+        	User u= uLoggedIn.loggedIn();
+            Event e = eventService.findEvent(id);
 
             if (e.isPrivateEvent()) {
-                Invite invite = inviteService.findByUserAndEvent(sessionService.getCurrentUser(), e);
+                Invite invite = inviteService.findInviteByUserAndEvent(u, e);
 
                 if (invite == null) {
-                    throw new Exception("Sin invitacion");
+                    throw new Exception("No invitation");
                 }
             }
 
             if (e.getCost() > 0) {
                 return "redirect:/payments/{id}";
             } else {
-                registrationService.create(id);
+                registrationService.createRegistration(id);
                 return "registrations/confirmedRegistration";
             }
 
