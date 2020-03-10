@@ -9,11 +9,10 @@
     <body>
          
         <div>
-            <h1><img src="https://drive.google.com/uc?id=1WFufuKPZPW6Nw51VjUSiuDBE2GNg_81Q" width="200"
-     height="100" ><br>Nuevo Evento</h1>
-            <h5>Aquí podrá crear sus eventos.</h5>   
+            <h1>Nuevo Evento</h1>
+           <h2>Crear evento</h2>  
         </div>
-    <center>
+    <div>
         <form  action="#" th:action="@{/events}" th:object="${event}" method="post" class="go-bottom">
            <h6>Datos del evento</h6>
 
@@ -52,7 +51,7 @@
                 <label for="eventDate">Fin registracion.</label>
             </div>
             <div >	
-                <h6 align="center"> Evento privado</h6>
+                <h6> Evento privado</h6>
                 <input type="checkbox" th:field="*{privateEvent}" />
 
             </div>
@@ -62,6 +61,6 @@
             <a class="button" href="/events">Volver</a>
         </div>
         </form>
-    </center>
+    </div>
     </body>
 </html>

@@ -5,45 +5,54 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Users</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       
+<head>
+<title>Users</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </head>
-    <body>
-        <div>
-            <a class="button" th:href="@{/events/myEvents}">Volver</a>
-        </div>
-        <div>
-            <h1><img src="/img/wagu_1-0.png" width="100" height="50" align="center"><br>Lista de usuarios</br></h1>
-            <div class="tbl-header"> 
-                <table cellpadding="0" cellspacing="0" border="0">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th></th>
+<style>
+table, tr, th, td {
+	border: solid 1px
+}
 
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-            <div class="tbl-content">
-                <table>
-                    <tbody>
-                        <tr th:each="user : ${users}">
-                            <td th:text="${user.email}"></td>
-                            <td th:text="${user.firstName}"></td>
-                            <td th:text="${user.lastName}"></td>
-                            <td><a class="button" th:href="@{/invites/{eventId}/{id}/sendInv(id=${user.id},eventId=${eventId})}">Invitar</a></td>
+td, th {
+	width: 8em
+}
+</style>
+</head>
+<body>
+	<div>
+		<a class="button" th:href="@{/events/myEvents}">Volver</a>
+	</div>
+	<div>
+		<h1>Lista de usuarios</h1>
+		<div class="tbl-header">
+			<table>
+				<thead>
+					<tr>
+						<th>Email</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th></th>
 
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </body>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="tbl-content">
+			<table>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.firstName}"></td>
+						<td th:text="${user.lastName}"></td>
+						<td><a class="button"
+							th:href="@{/invites/{eventId}/{id}/sendInv(id=${user.id},eventId=${eventId})}">Invitar</a></td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
 </html>
