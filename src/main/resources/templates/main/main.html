@@ -4,17 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
+    
+    <style type="text/css">
+    	
+    	div, h1{
+    		text-align: center;
+    		margin-bottom: 5em
+    	}
+    	a{
+    		padding: 1em;
+    		margin: 1em;
+    		font-size: 2rem;
+    		text-decoration: none;
+    		background: rgba(203,96,179,1);
+    		background: linear-gradient(to bottom, rgba(203,96,179,1) 0%, rgba(193,70,161,1) 50%, rgba(168,0,119,1) 51%, rgba(219,54,164,1) 100%);
+    		color: white;
+    		
+    	}
+    
+    </style>
 </head>
 
 <body>
-    <h1>INDEX</h1>
+    <h1>EventsAPP</h1>
     <br>
   
     <div>
-        <h1>
             <a class="button" th:href="@{/users/new}">Nuevo Usuario</a>
-       	 <a class="button" th:href="@{/login}">Iniciar sesion</a>
-        </h1>        
+       	 	<a class="button" th:href="@{/login}">Iniciar sesion</a>
     </div>
   
 </body>

@@ -64,7 +64,7 @@ public class RegistrationController {
                 Invite invite = inviteService.findByUserAndEvent(sessionService.getCurrentUser(), e);
 
                 if (invite == null) {
-                    throw new Exception("Sin invitacion");
+                    throw new Exception("Debe tener invitación para este registro");
                 }
             }
 

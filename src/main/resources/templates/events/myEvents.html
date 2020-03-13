@@ -1,78 +1,119 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <!-- meta charset="utf-8" con esto se declara la codificacion del documento. -->
-        <meta charset="utf-8">
-        <title>Mis Eventos</title>
-  
-<style>
-table, tr, th, td {
-	border: solid 1px
-}
+<head>
+<meta charset="utf-8">
+<title>Mis Eventos</title>
 
-td, th {
-	width: 100px
-}
-</style>
-    
-    </head>
+		<style>
+			table, tr, th, td {
+				border: solid 1px
+			}
+			
+			td, th {
+				width: 100px
+			}
+			
+			li {
+				display: inline-block;
+				margin: 1em;
+				color: white;
+			}
+			
+			h1 {
+				margin: 0
+			}
+			
+			ul {
+				background: rgba(203, 96, 179, 1);
+				margin: 0;
+				float: right !important
+			}
+			
+			body {
+				margin: 0
+			}
+			
+			a {
+				text-decoration: none;
+				color: white
+			}
+			
+			.center {
+				text-align: center
+			}
+			
+			/* 		table{ */
+			/* 			background: #99004d */
+			/* 		} */
+			.button {
+				color: blue
+			}
+		</style>
 
-    <body>
-        <div>
-            <div id="mySidenav" class="sidenav">
-              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-              <a href="/events/new">Nuevo Evento</a>
-        <h5>Crea nuevos eventos definiendo difernetes parámetros.</h5>
-        <a th:href="@{/events}">Volver</a>
-        <h5>Volver a la pestaña de todos los eventos.</h5>
-              <a href="/logout">Salir</a>
-              
-            </div>
-        <span style="font-size:30px;cursor:pointer;color:#ffffff" onclick="openNav()">&#9776; Menú</span>
-       
-    </div>
-    <div class="tbl-header">
-      <h1><br>Mis Eventos<br><h3> Usuario:  </h3><p th:text="${currentUser.email}"></p></h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre del Evento</th>
-          <th>Fecha del Evento</th>
-          <th>Inicio de Registro</th>
-          <th>Fin de Registo</th>
-          <th>Lugar</th>
-          <th>Disponibilidad</th>
-          <th>Tipo de evento</th>
-          <th>Costo</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-  </table>
-    </div>
-    <div class="tbl-content">
-        <table>
-          <tbody>
-              <tr th:each="event : ${events}">
-                        <td th:text="${event.eventName}"></td>
-                        <td th:text="${event.eventDate}"></td>
-                        <td th:text="${event.startRegistrations}"></td>
-                        <td th:text="${event.endRegistrations}"></td>
-                        <td th:text="${event.lugar}"></td>
-                           
-                        <td th:text="${event.isAvailableQuota()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
-                        <td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
-                        <td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
-                        
-                        
+</head>
 
-                        <td> <a th:href="@{/events/{id}/eventDetails(id=${event.id})}"class="button">Detalles</a></td>
-                        <td> <a th:href="@{/invites/{id}/invite(id=${event.id})}" class="button">Invitar</a></td>
-                        <td> <a th:href="@{/events/{id}/delete(id=${event.id})}" class="button">Eliminiar</a></td>
-              </tr>
-                </tbody>
-      </table>
-    </div>
+<body>
+	<ul>
+		<li><a href="/events/new">Nuevo Evento</a></li>
+		<li><a th:href="@{/events}">Volver</a></li>
+		<li><a href="/logout">Salir</a></li>
+	</ul>
+	<div class="center">
+		<br> <br> <br> <br> <br>
+		<h1>Mis Eventos</h1>
+		<p>Usuario:</p>
+		<p th:text="${currentUser.email}"></p>
+		<br> <br> <br> <br>
+		<center>
+			<table cellpadding="0" cellspacing="0" border="0">
+				<thead>
+					<tr>
+						<th>Nombre del Evento</th>
+						<th>Fecha del Evento</th>
+						<th>Inicio de Registro</th>
+						<th>Fin de Registo</th>
+						<th>Lugar</th>
+						<th>Disponibilidad</th>
+						<th>Tipo de evento</th>
+						<th>Costo</th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+			</table>
+		</center>
+
+	</div>
+	<center>
+
+		<table class="center" cellpadding="0" cellspacing="0" border="0">
+			<tbody>
+				<tr th:each="event : ${events}">
+					<td th:text="${event.eventName}"></td>
+					<td th:text="${event.eventDate}"></td>
+					<td th:text="${event.startRegistrations}"></td>
+					<td th:text="${event.endRegistrations}"></td>
+					<td th:text="${event.lugar}"></td>
+
+					<td
+						th:text="${event.isAvailableQuota()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
+					<td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
+					<td
+						th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
+
+
+
+					<td><a th:href="@{/events/{id}/eventDetails(id=${event.id})}"
+						class="button">Detalles</a></td>
+					<td><a th:href="@{/invites/{id}/invite(id=${event.id})}"
+						class="button">Invitar</a></td>
+					<td><a th:href="@{/events/{id}/delete(id=${event.id})}"
+						class="button">Eliminiar</a></td>
+				</tr>
+			</tbody>
+
+		</table>
+	</center>
 </body>
 </html>

@@ -141,11 +141,11 @@ public class EventController {
                 if (event.getCost() > 0) {
                     List<Payment> payments = paymentService.findByEvent(event);
                     model.addAttribute("payments", payments);
-                    return "events/eventDetailsPago";
+                    return "events/eventDetailsPaid";
                 }
                 List<Registration> registrations = event.getRegistrations();
                 model.addAttribute("registrations", registrations);
-                return "events/eventDetailsGratis";
+                return "events/eventDetailsFree";
             }
             throw new Exception("Permiso denegado usuario invalido");
 

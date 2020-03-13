@@ -10,44 +10,65 @@
         		border: solid 1px
         	}
         	td,th{
-        		width: 8em
+        		width: 8em;
+        		text-align: center
         	}
-        
+        	li{
+        		display: inline-block;
+        		margin: 1em;
+        		color: white;
+        	}
+         	h1{
+         		margin:0
+        	} 
+        	ul{
+        		background: rgba(203,96,179,1);
+        		margin:0;
+        		float: right !important
+        	}
+        	body{
+        		margin:0
+        	}
+        	li a{
+        		text-decoration: none;
+        		color: white
+        	}
+        	
         </style>
     </head>
     <body>
         
         <div>
-            <div id="mySidenav" class="sidenav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <a href="/events/new">Nuevo Evento</a>
-                <h5>Crea nuevos eventos definiendo difernetes parámetros.</h5>
-                <a href="/events/myEvents">Mis eventos</a>
-                <h5>Administra los eventos que has creado.</h5>
-                <a href="/invites/myInvites">Mis Invitaciones</a>
-                <h5>Pagina de mis invitaciones.</h5>
-                <a href="/registrations/myRegistrations">Mis inscripciones</a>
-                <h5>Página donde se muestran a que eventos estas registrado.</h5>
-                <a href="/logout">Salir</a>
-            </div>
-            <span style="font-size:30px;cursor:pointer;color:#ffffff" onclick="openNav()">&#9776; Menú</span>
-			<ul>
-				<li href="/events/new">Nuevo Evento</li>
-				<li href="/events/myEvents">Mis eventos</li>
-				<li href="/invites/myInvites">Mis Invitaciones</li>
-				<li href="/registrations/myRegistrations">Mis inscripciones</li>
-				<li href="/logout">Salir</li>
-			</ul>
-        </div>
+            <ul>
+                <li><a href="/events/new">Nuevo Evento</a></li>
+                <li><a href="/events/myEvents">Mis eventos</a></li>
+                <li><a href="/invites/myInvites">Mis Invitaciones</a></li>
+                <li><a href="/registrations/myRegistrations">Mis inscripciones</a></li>
+                <li><a href="/logout">Salir</a></li>
+            </ul>
+         </div>
+			
             
            
-        
+        <br>
            
 
          
         
         <div class="tbl-header">
-            <h1><br>Eventos<br><h7> Usuario:  </h7><h7 th:text="${currentUser.email}"></h7></h1>
+        	<center>
+        	
+        	<br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h1>Eventos</h1>
+            <p> Usuario: </p><span th:text="${currentUser.email}"></span>
+            <br>
+            <br>
+            <br>
             <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
                     <tr>
@@ -64,6 +85,9 @@
                 </thead>
             </table>
         </div>
+                                    </center>
+        
+        <center>
         <div class="tbl-content">
             <table cellpadding="0" cellspacing="0" border="0">
                 <tbody>
@@ -83,7 +107,9 @@
                 </tbody>
             </table>
         </div>
+        
 
+                    </center>
         
     </body>
 </html>

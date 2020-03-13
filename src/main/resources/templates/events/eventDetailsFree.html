@@ -1,21 +1,52 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html>
     <head>
         <title>Event Details</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <style>
+         <style>
         	th{
         		margin-right:1em
         	}
-        
+        	table,tr,th,td{
+        		border: solid 1px
+        	}
+        	td,th{
+        		width: 6em;
+        		text-align: center;
+        	}
+        	li{
+        		display: inline-block;
+        		margin: 1em;
+        		color: white;
+        	}
+         	h1{
+         		margin:0
+        	} 
+        	ul{
+        		background: rgba(203,96,179,1);
+        		margin:0;
+        		float: right !important
+        	}
+        	body{
+        		margin:0
+        	}
+        	a{
+        		text-decoration: none;
+        		color: white
+        	}
+        	.button{
+        		color:blue
+        	}
+        	
+        	.datos td, .datos th{
+        		width: 8rem
+        	}
+        	
         </style>
+        
        
     </head>
     <body>
@@ -23,29 +54,17 @@ and open the template in the editor.
 
 
         <div>
-            <div id="mySidenav" class="sidenav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <a href="/events">Eventos</a>
-                <h5>Pagina donde se muestran todos los eventos</h5>
-                <a href="/events/new">Nuevo Evento</a>
-                <h5>Crea nuevos eventos definiendo difernetes parámetros.</h5>
-                <a href="/events/myEvents">Mis eventos</a>
-                <h5>Administra los eventos que has creado.</h5>
-                <a href="/invites/myInvites">Mis Invitaciones</a>
-                <h5>Pagina de mis invitaciones.</h5>
-                <a href="/logout">Salir</a>
-               		
-            </div>
-            <span style="font-size:30px;cursor:pointer;color:#ffffff" onclick="openNav()">&#9776; Menú</span>
-            <script>
-                function openNav() {
-                document.getElementById("mySidenav").style.width = "250px";
-                }
-
-                function closeNav() {
-                document.getElementById("mySidenav").style.width = "0";
-                }
-            </script>
+           
+             <div>
+            <ul>
+                <li><a href="/events">Eventos</a></li>
+                <li><a href="/events/new">Nuevo Evento</a></li>                
+                <li><a href="/events/myEvents">Mis eventos</a></li>
+                <li><a href="/invites/myInvites">Mis Invitaciones</a></li>
+                <li><a href="/logout">Salir</a></li>
+            </ul>
+         </div>
+           
         </div>
 
 
@@ -54,28 +73,39 @@ and open the template in the editor.
 
 
 
-        <div class="tbl-header">
-            <table cellpadding="0" cellspacing="0" border="0">
+       <center>
 
-                <h1><br>Detalles de los eventos<br><h7> Usuario:  </h7><h7 th:text="${currentUser.email}"></h7></h1>
-
-                <thead>
-                    <tr>
-                        <th>Nombre del eEvento</th>
-                        <th>Fecha del Evento</th>
-                        <th>Inicio de Registro</th>
-                        <th>Fin de Registo</th>
-                        <th>Lugar</th>
-                        <th>Disponibilidad</th>
-                        <th>Tipo de Evento</th>
-                        <th>Costo</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+		<div>
+			<table cellpadding="0" cellspacing="0" border="0">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<h1>Detalles de los eventos</h1>
+				<p>Usuario:</p>
+				<span th:text="${currentUser.email}"></span>
+				<br>
+				<br>
+				<br>
+				<thead>
+					<tr>
+						<th>Nombre del Evento</th>
+						<th>Fecha del Evento</th>
+						<th>Inicio de Registro</th>
+						<th>Fin de Registo</th>
+						<th>Lugar</th>
+						<th>Disponibles</th>
+						<th>Tipo de Evento</th>
+						<th>Costo</th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 
         <div>
             <table cellpadding="0" cellspacing="0" border="0">
@@ -104,11 +134,11 @@ and open the template in the editor.
 
 
 
-        <div class="tbl-header">
+        <div class="datos">
             <table cellpadding="0" cellspacing="0" border="0">
-                <h1 >Listado de Inscriptos </h1>
 
                 <thead>
+                <h2 >Listado de Inscriptos </h2>
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
@@ -117,7 +147,7 @@ and open the template in the editor.
                 </thead>
             </table>
         </div>
-        <div class="tbl-content">
+        <div>
             <table cellpadding="0" cellspacing="0" border="0">
                 <tbody>
                     <tr th:each="registration : ${registrations}">
@@ -131,9 +161,9 @@ and open the template in the editor.
         </div>
 
 
-        <div class="tbl-header">
+        <div class="datos">
             <table cellpadding="0" cellspacing="0" border="0">
-                <h1 >Listado de Invitaciones</h1>
+                <h3>Listado de Invitaciones</h3>
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -144,7 +174,7 @@ and open the template in the editor.
                 </thead>
             </table>
         </div>
-        <div class="tbl-content">
+        <div class="datos">
             <table cellpadding="0" cellspacing="0" border="0">
                 <tbody>
                     <tr th:each="invite : ${invites}">
@@ -157,6 +187,7 @@ and open the template in the editor.
 
             </table>        
         </div>
+	</center>
 
     </body>
 </html>

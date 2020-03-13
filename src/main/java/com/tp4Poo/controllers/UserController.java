@@ -19,7 +19,7 @@ import com.tp4Poo.services.UserService;
 
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/users") //root
 public class UserController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class UserController {
     @PostMapping
     public String create(Model model, @ModelAttribute User user) throws Exception {
         try {
-            userService.create(user);
+            userService.create(user);// crea user con datos del form sign up (usa @ModelAttribute)
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
