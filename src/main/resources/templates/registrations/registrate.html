@@ -55,7 +55,7 @@ body,div{
                         <td th:text="${event.getAvailability()}"></td>
                         <td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
                         <td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
-                        <td><a class="button" th:href="@{/registrations/{id}/confirmRegistration(id=${event.id})}">Confirmar registracion</a></td>
+                        <td><a class="button" th:href="@{/registrations/{id}/confirmRegistration(id=${event.id})}">Realizar inscripción</a></td>
                     </tr>
                 </tbody>
             </table>

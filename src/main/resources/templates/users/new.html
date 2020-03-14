@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor. *1*
--->
+
 <html lang="es">
 
 <head>
 	<meta charset="UTF-8">
 	
 	<style type="text/css">
-	
+	html{
+    		font-family: helvetica, arial
+    	}
 		input {
-			width: 200px;
+			width: 300px;
 			margin-bottom: 1.5em;
-			display: block
+			display: block;
+			height: 1.5rem;
+			font-size: 1rem;
 		}
+		
+		.div{
+		display: flex;
+		justify-content: center;
+		width: 100%;
+
+margin-top: 2rem
+		
+		
+		}
+		.button{
+/* 	height: 2rem; */
+/* 	width: 3rem; */
+	padding: .3rem .5rem;
+	text-decoration: none;
+	color: white;
+	background: #0000ff;
+	border:0;
+	font-size: 1.2rem;
+	border-radius: 8px
+	
+}
 	</style>
 
 </head>
 
 
-<body>
+<body  style="text-align: center">
+        <div class="div">
+        
         <div>
-            <h1>Nuevo Usuario</h1>
-        </div>
+        <h1 style= "color: #0000ff ">EventsAPP</h1>
+     
 
-        <div>
+        <br>
+           <h2 style= "background: #00bfff; color: white; padding-left:.5em ">Nuevo Usuario</h2>
+            
+       
+
             <form  action="#" th:action="@{/users}" th:object="${user}" method="post">
                  <div>
                  	<label for="name">Nombre</label>
@@ -57,7 +85,7 @@ and open the template in the editor. *1*
 
             </form>
         </div>
-      
+       </div>
     </body>
 </html>
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tp4Poo.entities;
 
 import java.util.Arrays;
@@ -19,10 +14,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- *
- * @author jpgm
- */
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {

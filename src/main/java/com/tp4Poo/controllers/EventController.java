@@ -121,7 +121,7 @@ public class EventController {
                 return "redirect:/events/myEvents";
             }
 
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Inválido");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
@@ -147,21 +147,20 @@ public class EventController {
                 model.addAttribute("registrations", registrations);
                 return "events/eventDetailsFree";
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Usuario inválido");
 
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
         }
     }
-        // Ver si se puede poner en AppConfiguration o si se puede hacer otra cosa
-        @InitBinder
-        public void initBinder
-        (final WebDataBinder binder
-        
-            ) {
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-        }
+
+    
+    @InitBinder
+    public void initBinder(final WebDataBinder binder) {
+        final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); //La clase SimpleDateFormat nos ayuda a mostrar las fechas en el formato que queramos
+
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(formatter, true));
+    }
 
     }

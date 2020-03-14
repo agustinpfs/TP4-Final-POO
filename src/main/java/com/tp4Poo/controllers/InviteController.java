@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tp4Poo.controllers;
 
 
@@ -55,7 +50,7 @@ public class InviteController {
                 inviteService.create(i);
                 return "redirect:/invites/{eventId}/invite";
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Usuario inválido");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
@@ -71,7 +66,7 @@ public class InviteController {
                 model.addAttribute("eventId", eventId);
                 return "invites/inviteUsers";
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Usuario inválido");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
@@ -96,7 +91,7 @@ public class InviteController {
                 String referer = request.getHeader("Referer");
                 return "redirect:" + referer;
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Usuario inválido");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";

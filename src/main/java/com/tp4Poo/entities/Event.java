@@ -89,7 +89,7 @@ public class Event {
         return cost == 0;
     }
     
-    public boolean isAvailableQuota(){
+    public boolean isAvailable(){
         return getAvailability() > 0;
     }
     

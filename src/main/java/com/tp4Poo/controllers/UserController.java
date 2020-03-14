@@ -60,7 +60,7 @@ public class UserController {
                 userService.delete(id);
                 return "redirect:/users";
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Usuario inválido");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
@@ -76,7 +76,7 @@ public class UserController {
             model.addAttribute("user", user);
             return "users/edit";
         }
-        throw new Exception("Permiso denegado usuario invalido");
+        throw new Exception("Usuario inválido");
     }
          catch (Exception e) {
              model.addAttribute("error", e.getMessage());
@@ -91,7 +91,7 @@ public class UserController {
             userService.update(id, user);
             return "redirect:/users";
         }
-        throw new Exception("Permiso denegado usuario invalido");
+        throw new Exception("Usuario inválido");
     }
          catch (Exception e) {
              model.addAttribute("error", e.getMessage());

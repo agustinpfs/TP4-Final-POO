@@ -4,89 +4,87 @@
 <title>Nuevo Evento</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-html{
-    		font-family: helvetica, arial
-    	}
-label {
-	text-align: left;
-	display: block
-}
+	<style>
+		html {
+			font-family: helvetica, arial
+		}
+		
+		label {
+			text-align: left;
+			display: block
+		}
+		
+		input {
+			width: 200px;
+			margin-bottom: 1.2rem;
+			margin-top: .5rem;
+			height: 20px;
+			padding: 5px;
+		}
+		
+		div {
+			text-align: left;
+		}
+		
+		.centro {
+			text-align: center;
+			width: 500px;
+			margin-left: auto;
+			margin-right: auto
+		}
+		
+		.centrar {
+			text-align: center;
+			width: 100%
+		}
+		
+		.display {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 1.5rem
+		}
+		
+		.button {
+			/* 	height: 2rem; */
+			/* 	width: 3rem; */
+			padding: .3rem .5rem;
+			text-decoration: none;
+			color: white;
+			background: #0000ff;
+			border: 0;
+			font-size: 1.2rem
+		}
+		
+		.button2 {
+			padding: .3rem .5rem;
+			text-decoration: none;
+			color: grey;
+			border: 0;
+			font-size: 1rem;
+			text-decoration: underline;
+			margin-left: 3rem
+		}
 
-input {
-	width: 200px;
-	margin-bottom: 1.2rem;
-	margin-top: .5rem;
-	height: 20px;
-	padding: 5px;
-}
-
-div {
-	text-align: left;
-}
-
-.centro {
-	text-align: center;
-	width: 500px;
-	margin-left: auto;
-	margin-right:auto
-}
-.centrar {
-	text-align: center;
-	width: 100%
-}
-
-.display {
-	display: inline-block;
-	vertical-align: top;
-	margin-right: 1.5rem
-}
-
-.button{
-/* 	height: 2rem; */
-/* 	width: 3rem; */
-	padding: .3rem .5rem;
-	text-decoration: none;
-	color: white;
-	background: #0000ff;
-	border:0;
-	font-size: 1.2rem
-	
-}
-
-.button2{
-
-	padding: .3rem .5rem;
-	text-decoration: none;
-	color: grey;
-	border:0;
-	font-size: 1rem;
-	text-decoration: underline;
-	margin-left: 3rem
-	
-}
-
-/*        		center{ */
-/*        			text-align: center */
-/*        		} */
-</style>
+	</style>
 </head>
 <body>
-<div class="centrar">
+	<div class="centrar">
 
 		<div class="centro">
 
-			<h1 style= "color: #0000ff ">Crear Nuevo Evento</h1>
+			<h1 style="color: #0000ff">Crear Nuevo Evento</h1>
 
 			<div>
-				<h2 style= "background: #00bfff; color: white; padding-left:.5em "> Datos del evento</h2>
+				<h2 style="background: #00bfff; color: white; padding-left: .5em">
+					Datos del evento</h2>
 
-					<form action="#" th:action="@{/events}" th:object="${event}" method="post">
-				<div class="display">
+				<form action="#" th:action="@{/events}" th:object="${event}"
+					method="post">
+					<div class="display">
 
 						<div>
-							<label for="name">Nombre del evento</label> 
-							<input id="eventName" name="eventName" type="text" field="eventName" required />
+							<label for="name">Nombre del evento</label> <input id="eventName"
+								name="eventName" type="text" field="eventName" required />
 						</div>
 						<div>
 							<label for="lugar">Lugar del evento</label> <input id="lugar"
@@ -102,32 +100,36 @@ div {
 						</div>
 
 
-				</div>
-				<div class="display">
-					<div>
-						<label for="eventDate">Fecha del evento</label> <input
-							id="eventDate" name="eventDate" type="date"
-							th:field="*{eventDate}" required />
 					</div>
-					<div>
-						<label for="eventDate">Inicio registración</label> <input
-							id="startRegistrations" name="startRegistrations" type="date"
-							th:field="*{startRegistrations}" required />
+					<div class="display">
+						<div>
+							<label for="eventDate">Fecha del evento</label> <input
+								id="eventDate" name="eventDate" type="date"
+								th:field="*{eventDate}" required />
+						</div>
+						<div>
+							<label for="eventDate">Inicio registración</label> <input
+								id="startRegistrations" name="startRegistrations" type="date"
+								th:field="*{startRegistrations}" required />
+						</div>
+						<div>
+							<label for="eventDate">Fin registración</label> <input
+								id="endRegistrations" name="endRegistrations" type="date"
+								th:field="*{endRegistrations}" required />
+						</div>
+
+						<div>
+							<div style="margin: 24px 0 0px 0">
+
+								<span class="display"
+									style="display: inline-block; margin: 7px 0 7px 0">Privado
+								</span><input class="display"
+									style="width: 20px; display: inline-block" type="checkbox"
+									th:field="*{privateEvent}" />
+							</div>
+						</div>
+
 					</div>
-					<div>
-						<label for="eventDate">Fin registración</label> <input
-							id="endRegistrations" name="endRegistrations" type="date"
-							th:field="*{endRegistrations}" required />
-					</div>
-					
-				<div>
-								<div style= "margin: 24px 0 0px 0">
-				
-						<span class="display" style= "display:inline-block; margin: 7px 0 7px 0">Privado </span><input class="display" style= "width:20px;display:inline-block" type="checkbox" th:field="*{privateEvent}" />
-					</div>
-					</div>
-					
-				</div>
 
 					<div>
 
@@ -137,7 +139,7 @@ div {
 				</form>
 			</div>
 		</div>
-				</div>
-		
+	</div>
+
 </body>
 </html>

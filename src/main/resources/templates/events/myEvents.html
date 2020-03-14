@@ -5,52 +5,50 @@
 <title>Mis Eventos</title>
 
 		<style>
-		html{
-    		font-family: helvetica, arial
-    	}
-			table, tr, th, td {
-				border: solid 1px
-			}
-			
-			td, th {
-				width: 100px
-			}
-			
-			li {
-				display: inline-block;
-				margin: 1em;
-				color: white;
-			}
-			
-			h1 {
-				margin: 0
-			}
-			
-			ul {
-				background: rgba(203, 96, 179, 1);
-				margin: 0;
-				float: right !important
-			}
-			
-			body {
-				margin: 0
-			}
-			
-			a {
-				text-decoration: none;
-				color: white
-			}
-			
-			.center {
-				text-align: center
-			}
-			
-			/* 		table{ */
-			/* 			background: #99004d */
-			/* 		} */
-			.button {
-				color: blue
-			}
+				html{
+	    			font-family: helvetica, arial
+	    		}
+	    		
+				table, tr, th, td {
+					border: solid 1px
+				}
+				
+				td, th {
+					width: 100px
+				}
+				
+				li {
+					display: inline-block;
+					margin: 1em;
+					color: white;
+				}
+				
+				h1 {
+					margin: 0
+				}
+				
+				ul {
+					background: rgba(203, 96, 179, 1);
+					margin: 0;
+					float: right !important
+				}
+				
+				body {
+					margin: 0
+				}
+				
+				a {
+					text-decoration: none;
+					color: white
+				}
+				
+				.center {
+					text-align: center
+				}
+				
+				.button {
+					color: blue
+				}
 		</style>
 
 </head>
@@ -99,11 +97,9 @@
 					<td th:text="${event.endRegistrations}"></td>
 					<td th:text="${event.lugar}"></td>
 
-					<td
-						th:text="${event.isAvailableQuota()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
+					<td th:text="${event.isAvailable()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
 					<td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
-					<td
-						th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
+					<td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
 
 
 

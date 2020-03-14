@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.tp4Poo.entities.User;
 import com.tp4Poo.repositories.UserRepository;
+import com.tp4Poo.validation.UserValidator;
 
 
 @Service
@@ -22,8 +23,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    private UserValidator userValidator;
+    @Autowired
+    private UserValidator userValidator;
 
     @Override
     public List<User> users() {
@@ -32,7 +33,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     public User create(User user) throws Exception {
-//        userValidator.validate(user);
+        userValidator.validate(user);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return userRepository.save(user);
     }

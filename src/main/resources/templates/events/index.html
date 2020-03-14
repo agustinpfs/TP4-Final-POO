@@ -1,120 +1,119 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <!-- meta charset="utf-8" con esto se declara la codificacion del documento. -->
-        <meta charset="utf-8">
-        <title>Eventoss</title>
-        
-         <style>
-         html{
-    		font-family: helvetica, arial
-    	}
-        	table,tr,th,td{
-        		border: solid 1px
-        	}
-        	td,th{
-        		width: 8em;
-        		text-align: center
-        	}
-        	li{
-        		display: inline-block;
-        		margin: 1em;
-        		color: white;
-        	}
-         	h1{
-         		margin:0
-        	} 
-        	ul{
-        		background: rgba(203,96,179,1);
-        		margin:0;
-        		float: right !important
-        	}
-        	body{
-        		margin:0
-        	}
-        	li a{
-        		text-decoration: none;
-        		color: white
-        	}
-        	
-        </style>
-    </head>
-    <body>
-        
-        <div>
-            <ul>
-                <li><a href="/events/new">Nuevo Evento</a></li>
-                <li><a href="/events/myEvents">Mis eventos</a></li>
-                <li><a href="/invites/myInvites">Mis Invitaciones</a></li>
-                <li><a href="/registrations/myRegistrations">Mis inscripciones</a></li>
-                <li><a href="/logout">Salir</a></li>
-            </ul>
-         </div>
-			
-            
-           
-        <br>
-           
+<head>
+<meta charset="utf-8">
+<title>Eventos</title>
 
-         
-        
-        <div class="tbl-header">
-        	<center>
-        	
-        	<br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h1>Eventos</h1>
-            <p> Usuario: </p><span th:text="${currentUser.email}"></span>
-            <br>
-            <br>
-            <br>
-            <table cellpadding="0" cellspacing="0" border="0">
-                <thead>
-                    <tr>
-                        <th>Nombre del Evento</th>
-                        <th>Fecha del Evento</th>
-                        <th>Inicio de Registro</th>
-                        <th>Fin de Registo</th>
-                        <th>Lugar</th>
-                        <th>Disponibles</th>
-                        <th>Tipo de Evento</th>
-                        <th>Costo</th>
-                        <th></th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-                                    </center>
-        
-        <center>
-        <div class="tbl-content">
-            <table cellpadding="0" cellspacing="0" border="0">
-                <tbody>
-                    <tr th:each="event : ${events}">	
-                        <td th:text="${event.eventName}"></td>
-                        <td th:text="${event.eventDate}"></td>
-                        <td th:text="${event.startRegistrations}"></td>
-                        <td th:text="${event.endRegistrations}"></td>
-                        <td th:text="${event.lugar}"></td>
-                        <td th:text="${event.isAvailableQuota()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
-                        <td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
-                        <td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
-                        <td>
-                            <a th:href="@{/registrations/{id}/registrate(id=${event.id})}" class="button">Registrarse</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
+<style>
+	html {
+		font-family: helvetica, arial
+	}
+	
+	table, tr, th, td {
+		border: solid 1px
+	}
+	
+	td, th {
+		width: 8em;
+		text-align: center
+	}
+	
+	li {
+		display: inline-block;
+		margin: 1em;
+		color: white;
+	}
+	
+	h1 {
+		margin: 0
+	}
+	
+	ul {
+		background: rgba(203, 96, 179, 1);
+		margin: 0;
+		float: right !important
+	}
+	
+	body {
+		margin: 0
+	}
+	
+	li a {
+		text-decoration: none;
+		color: white
+	}
+</style>
+</head>
+<body>
 
-                    </center>
-        
-    </body>
+	<div>
+		<ul>
+			<li><a href="/events/new">Nuevo Evento</a></li>
+			<li><a href="/events/myEvents">Mis eventos</a></li>
+			<li><a href="/invites/myInvites">Mis Invitaciones</a></li>
+			<li><a href="/registrations/myRegistrations">Mis inscripciones</a></li>
+			<li><a href="/logout">Salir</a></li>
+		</ul>
+	</div>
+
+	<br>
+
+	<div>
+		<center>
+
+			<br> <br> <br> <br> <br> <br>
+			<h1>Eventos</h1>
+			<!-- currentUser var que usa model en el controller -->
+			<p>Usuario:</p>
+			<span th:text="${currentUser.email}"></span> <br> <br> <br>
+			<table cellpadding="0" cellspacing="0" border="0">
+				<thead>
+					<tr>
+						<th>Nombre del Evento</th>
+						<th>Fecha del Evento</th>
+						<th>Inicio de Registro</th>
+						<th>Fin de Registo</th>
+						<th>Lugar</th>
+						<th>Disponibles</th>
+						<th>Tipo de Evento</th>
+						<th>Costo</th>
+						<th></th>
+					</tr>
+				</thead>
+			</table>
+	</div>
+	</center>
+
+	<center>
+		<div>
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tbody>
+<!-- 				events var model lista de eventos -->
+					<tr th:each="event : ${events}"> 
+						<!--tabla events generada en entity	 -->
+						<td th:text="${event.eventName}"></td>
+						<td th:text="${event.eventDate}"></td>
+						<td th:text="${event.startRegistrations}"></td>
+						<td th:text="${event.endRegistrations}"></td>
+						<td th:text="${event.lugar}"></td>
+						<td
+							th:text="${event.isAvailable()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
+						<td
+							th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
+						<td
+							th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
+						<td><a
+							th:href="@{/registrations/{id}/registrate(id=${event.id})}"
+							class="button">Registrarse</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+	</center>
+
+</body>
 </html>
 
 
