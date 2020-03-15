@@ -77,7 +77,7 @@ public class EventController {
 
     }
 
-    @GetMapping("/{id}/delete")
+    @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable("id") Long id) throws Exception {
         try {
             Event event = eventS.findEvent(id);
@@ -89,14 +89,14 @@ public class EventController {
                 throw new Exception("No se puede Borrar por que el evento posee invitaciones");
             }
 
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Usuario inválido");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
         }
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) throws Exception {
         try {
             Event event = eventS.findEvent(id);
@@ -111,7 +111,7 @@ public class EventController {
         }
     }
 
-    @PostMapping("/{id}/update")
+    @PostMapping("/update/{id}")
     public String update(Model model, @PathVariable Long id, @ModelAttribute Event event) throws Exception {
         try {
             Event oldEvent = eventS.findEvent(id);
@@ -127,7 +127,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/{id}/eventDetails")
+    @GetMapping("/eventDetails/{id}")
     public String detail(@PathVariable Long id, Model model) throws Exception {
         try {
             Event event = eventS.findEvent(id);

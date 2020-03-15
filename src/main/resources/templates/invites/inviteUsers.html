@@ -54,7 +54,7 @@ body,div{
 						<td th:text="${user.firstName}"></td>
 						<td th:text="${user.lastName}"></td>
 						<td><a class="button"
-							th:href="@{/invites/{eventId}/{id}/sendInv(id=${user.id},eventId=${eventId})}">Invitar</a></td>
+							th:href="@{/invites/sendInv/{eventId}/{userId}(id=${user.id},eventId=${eventId})}">Invitar</a></td>
 
 					</tr>
 				</tbody>

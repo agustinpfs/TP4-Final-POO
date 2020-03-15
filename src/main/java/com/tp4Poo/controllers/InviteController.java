@@ -41,7 +41,7 @@ public class InviteController {
     @Autowired
     private UserLoggedInService uLoggedInS;
 
-    @GetMapping("/{eventId}/{userId}/sendInv")
+    @GetMapping("/sendInv/{eventId}/{userId}")
     public String sendInv(Model model, @PathVariable Long eventId, @PathVariable Long userId) throws Exception {
         try {
             Event event = eventS.findEvent(eventId);
@@ -50,7 +50,7 @@ public class InviteController {
                 inv.setEvent(event);
                 inv.setUser(userS.findUser(userId));
                 inviteS.addInvite(inv);
-                return "redirect:/invites/{eventId}/invite";
+                return "redirect:/invites/invite/{eventId}";
             }
             throw new Exception("Usuario inválido");
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class InviteController {
         }
     }
 
-    @GetMapping("/{eventId}/invite")
+    @GetMapping("/invite/{eventId}")
     public String invite(Model model, @PathVariable Long eventId) throws Exception {
         try {
         	
@@ -86,7 +86,7 @@ public class InviteController {
         return "invites/myInvites";
     }
 
-    @GetMapping("/{inviteId}/delete")
+    @GetMapping("/delete/{inviteId}")
     public String delete(Model model, @PathVariable Long inviteId, HttpServletRequest request) throws Exception {
         try {
             Invite inv = inviteS.findInvite(inviteId);

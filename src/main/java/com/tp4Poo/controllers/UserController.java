@@ -51,7 +51,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}/delete")
+    @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable("id") Long id) throws Exception {
         try {
 
@@ -66,7 +66,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model, Authentication authentication) throws Exception {
         try{
         if (uLoggedInS.getCurrentUser().getId().equals(id)) {
@@ -82,7 +82,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/{id}/update")
+    @PostMapping("/update/{id}")
     public String update(Model model, @PathVariable Long id, @ModelAttribute User user) throws Exception {
         try{
         if (uLoggedInS.getCurrentUser().getId().equals(id)) {

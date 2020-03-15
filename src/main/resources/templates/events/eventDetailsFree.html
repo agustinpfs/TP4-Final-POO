@@ -126,7 +126,7 @@
 
                         <td><a class="button" th:href="@{/events/{id}/edit(id=${event.id})}">Editar</a></td>
                         <td> <a th:href="@{/invites/{id}/invite(id=${event.id})}" class="button">Invitar</a></td>
-                        <td><a class="button" th:href="@{/events/{id}/delete(id=${event.id})}">Borrar</a></td>
+                        <td><a class="button" th:href="@{/events/delete/{id}(id=${event.id})}">Borrar</a></td>
 
 
                     </tr>
@@ -184,7 +184,7 @@
                         <td th:text="${invite.user.firstName}"></td>
                         <td th:text="${invite.user.lastName}"></td>
                         <td th:text="${invite.user.email}"></td>
-                        <td> <a class="button" th:href="@{/invites/{id}/delete(id=${invite.id})}">Borrar</a></td>
+                        <td> <a class="button" th:href="@{/invites/delete/{id}(id=${invite.id})}">Borrar</a></td>
                     </tr>
                 </tbody>
 
