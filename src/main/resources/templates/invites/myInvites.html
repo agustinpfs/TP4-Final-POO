@@ -99,7 +99,7 @@
 	                        <td th:text="${invite.event.owner.firstName}"></td>
 	                        <td th:text="${invite.event.owner.lastName}"></td>
 	
-	                        <td> <a th:href="@{/registrations/registrate/{id}(id=${invite.event.id})}" class="button">Registrarse</a></td>
+	                        <td> <a th:href="@{/registrations/registro/{id}(id=${invite.event.id})}" class="button">Registrarse</a></td>
 	                        <td> <a th:href="@{/invites/delete/{id}(id=${invite.id})}" class="button">Eliminiar</a></td>
 	                    </tr>
 	                </tbody>
