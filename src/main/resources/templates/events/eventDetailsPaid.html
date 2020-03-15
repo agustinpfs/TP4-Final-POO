@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html lang="es">
 
 <head>
-<title>Detalles de los eventos pagos</title>
+<title>Detalles Eventos Pagos</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-html{
-    		font-family: helvetica, arial
-    	}
+html {
+	font-family: helvetica, arial
+}
+
 th {
 	margin-right: 1em
 }
@@ -75,21 +72,12 @@ a {
 				<li><a href="/events/new">Nuevo Evento</a></li>
 				<li><a href="/events/myEvents">Mis eventos</a></li>
 				<li><a href="/invites/myInvites">Mis Invitaciones</a></li>
-				<li><a href="/registrations/myRegistrations">Mis
-						inscripciones</a></li>
+				<li><a href="/registrations/myRegistrations">Mis inscripciones</a></li>
 				<li><a href="/logout">Salir</a></li>
 			</ul>
 		</div>
 
 	</div>
-
-
-
-
-
-
-
-
 
 	<center>
 
@@ -135,8 +123,10 @@ a {
 						<td th:text="${event.endRegistrations}"></td>
 						<td th:text="${event.lugar}"></td>
 						<td th:text="${event.capacity}"></td>
-						<td	th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
-						<td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
+						<td
+							th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
+						<td
+							th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
 
 
 						<td><a class="button"

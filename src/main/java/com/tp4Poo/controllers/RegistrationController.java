@@ -42,11 +42,11 @@ public class RegistrationController {
         return "registrations/myRegistrations";
     }
 
-    @GetMapping("/registrate/{id}")
-    public String registrate(@PathVariable Long id, Model model) {
+    @GetMapping("/registro/{id}")
+    public String registro(@PathVariable Long id, Model model) {
         Event e = eventS.findEvent(id);
         model.addAttribute("event", e);
-        return "registrations/registrate";
+        return "registrations/registro";
     }
 
     @GetMapping("/confirmRegistration/{id}")

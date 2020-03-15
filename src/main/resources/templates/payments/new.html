@@ -1,109 +1,107 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
-   
-    <head>
-        <title>Pagos</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-        html{
-    		font-family: helvetica, arial
-    	}
-        label {
-	text-align: left;
-	display: block
-}
 
-input {
-	width: 200px;
-	margin-bottom: 1.2rem;
-	margin-top: .5rem;
-	height: 20px;
-	padding: 5px;
-}
+<head>
+<title>Pagos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		html {
+			font-family: helvetica, arial
+		}
+		
+		label {
+			text-align: left;
+			display: block
+		}
+		
+		input {
+			width: 200px;
+			margin-bottom: 1.2rem;
+			margin-top: .5rem;
+			height: 20px;
+			padding: 5px;
+		}
+		
+		div {
+			text-align: left;
+		}
+		
+		.centro {
+			text-align: left;
+			width: 400px;
+			margin-left: auto;
+			margin-right: auto
+		}
+		
+		.centrar {
+			text-align: center;
+			width: 100%
+		}
+		
+		.display {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 1.5rem
+		}
+		
+		.button {
+			/* 	height: 2rem; */
+			/* 	width: 3rem; */
+			padding: .3rem .5rem;
+			text-decoration: none;
+			color: white;
+			background: #0000ff;
+			border: 0;
+			font-size: 1.2rem;
+			margin-right: 3rem
+		}
+		
+		.button2 {
+			padding: .3rem .5rem;
+			text-decoration: none;
+			color: grey;
+			border: 0;
+			font-size: 1rem;
+			text-decoration: underline;
+			margin-left: 3rem
+		}
+		
+		center {
+			text-align: center
+		}
+	</style>
+</head>
+<body class="centrar">
 
-div {
-	text-align: left;
-}
 
-.centro {
-	text-align: left;
-	width: 400px;
-	margin-left: auto;
-	margin-right:auto
-}
-.centrar {
-	text-align: center;
-	width: 100%
-}
+	<div class="centro">
+		<div>
+			<h1>Datos del pago</h1>
+			<h3>Por favor ingrese los datos de la tarjeta</h3>
 
-.display {
-	display: inline-block;
-	vertical-align: top;
-	margin-right: 1.5rem
-}
+		</div>
+		<form action="#"
+			th:action="@{/payments/{eventId}(eventId=${event.id})}"
+			th:object="${payment}" method="post" class="go-bottom">
 
-.button{
-/* 	height: 2rem; */
-/* 	width: 3rem; */
-	padding: .3rem .5rem;
-	text-decoration: none;
-	color: white;
-	background: #0000ff;
-	border:0;
-	font-size: 1.2rem;
- 	margin-right: 3rem 
-	
-}
 
-.button2{
+			<div>
+				<label for="cardName">Nombre de la tarjeta</label> <input
+					id="cardName" name="cardName" type="text" field="cardName" required />
+			</div>
+			<div>
+				<label for="cardName">Número de la tarjeta</label> <input
+					id="cardNumber" name="cardNumber" type="text" field="cardNumber"
+					required />
+			</div>
 
-	padding: .3rem .5rem;
-	text-decoration: none;
-	color: grey;
-	border:0;
-	font-size: 1rem;
-	text-decoration: underline;
-	margin-left: 3rem
-	
-}
+			<button class="button" type="submit" name="newPayment">Pagar</button>
 
-        		center{ 
-        			text-align: center 
-        		} 
-</style>
-           </head>
-    <body class="centrar">
-        
-            
-    <div class="centro">
-        <div>
-           <h1>Datos del pago</h1>
-            <h3>Por favor ingrese los datos de la tarjeta</h3>
-            
-        </div>
-        <form action="#" th:action="@{/payments/{eventId}(eventId=${event.id})}" th:object="${payment}" method="post" class="go-bottom">
-               
-            
-             <div>
-                <label for="cardName">Nombre de la tarjeta</label>
-                <input   id="cardName" name="cardName" type="text" field="cardName" required/> 
-            </div>
-             <div>
-                <label for="cardName">Número de la tarjeta</label>
-                <input   id="cardNumber" name="cardNumber" type="text" field="cardNumber" required/> 
-            </div>
-           
-            <button class="button" type="submit" name="newPayment">Pagar</button>
-          
-            <a class="button2" th:href="@{/events}">Volver</a>
-        </form>
-    </div>
-   
-    </body>
+			<a class="button2" th:href="@{/events}">Volver</a>
+		</form>
+	</div>
+
+</body>
 </html>

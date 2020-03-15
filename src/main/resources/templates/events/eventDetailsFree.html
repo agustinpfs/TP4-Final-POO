@@ -1,74 +1,82 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>Event Details</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-         <style>
-         html{
-    		font-family: helvetica, arial
-    	}
-        	th{
-        		margin-right:1em
-        	}
-        	table,tr,th,td{
-        		border: solid 1px
-        	}
-        	td,th{
-        		width: 6em;
-        		text-align: center;
-        	}
-        	li{
-        		display: inline-block;
-        		margin: 1em;
-        		color: white;
-        	}
-         	h1{
-         		margin:0
-        	} 
-        	ul{
-        		background: rgba(203,96,179,1);
-        		margin:0;
-        		float: right !important
-        	}
-        	body{
-        		margin:0
-        	}
-        	a{
-        		text-decoration: none;
-        		color: white
-        	}
-        	.button{
-        		color:blue
-        	}
-        	
-        	.datos td, .datos th{
-        		width: 8rem
-        	}
-        	
-        </style>
-        
-       
-    </head>
-    <body>
+<head>
+<title>Event Details</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html {
+	font-family: helvetica, arial
+}
+
+th {
+	margin-right: 1em
+}
+
+table, tr, th, td {
+	border: solid 1px
+}
+
+td, th {
+	width: 6em;
+	text-align: center;
+}
+
+li {
+	display: inline-block;
+	margin: 1em;
+	color: white;
+}
+
+h1 {
+	margin: 0
+}
+
+ul {
+	background: rgba(203, 96, 179, 1);
+	margin: 0;
+	float: right !important
+}
+
+body {
+	margin: 0
+}
+
+a {
+	text-decoration: none;
+	color: white
+}
+
+.button {
+	color: blue
+}
+
+.datos td, .datos th {
+	width: 8rem
+}
+</style>
+
+
+</head>
+<body>
 
 
 
-        <div>
-           
-             <div>
-            <ul>
-                <li><a href="/events">Eventos</a></li>
-                <li><a href="/events/new">Nuevo Evento</a></li>                
-                <li><a href="/events/myEvents">Mis eventos</a></li>
-                <li><a href="/invites/myInvites">Mis Invitaciones</a></li>
-                <li><a href="/logout">Salir</a></li>
-            </ul>
-         </div>
-           
-        </div>
+	<div>
+
+		<div>
+			<ul>
+				<li><a href="/events">Eventos</a></li>
+				<li><a href="/events/new">Nuevo Evento</a></li>
+				<li><a href="/events/myEvents">Mis eventos</a></li>
+				<li><a href="/invites/myInvites">Mis Invitaciones</a></li>
+				<li><a href="/logout">Salir</a></li>
+			</ul>
+		</div>
+
+	</div>
 
 
 
@@ -76,7 +84,7 @@
 
 
 
-       <center>
+	<center>
 
 		<div>
 			<table cellpadding="0" cellspacing="0" border="0">
@@ -110,87 +118,84 @@
 			</table>
 		</div>
 
-        <div>
-            <table cellpadding="0" cellspacing="0" border="0">
-                <tbody>
-                    <tr th:object="${event}">
-                        <td th:text="${event.eventName}"></td>
-                        <td th:text="${event.eventDate}"></td>
-                        <td th:text="${event.startRegistrations}"></td>
-                        <td th:text="${event.endRegistrations}"></td>
-                        <td th:text="${event.lugar}"></td>
-                        <td th:text="${event.capacity}"></td>
-                        <td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
-                        <td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
+		<div>
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tbody>
+					<tr th:object="${event}">
+						<td th:text="${event.eventName}"></td>
+						<td th:text="${event.eventDate}"></td>
+						<td th:text="${event.startRegistrations}"></td>
+						<td th:text="${event.endRegistrations}"></td>
+						<td th:text="${event.lugar}"></td>
+						<td th:text="${event.capacity}"></td>
+						<td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
+						<td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
+						<td><a class="button" th:href="@{/events/{id}/edit(id=${event.id})}">Editar</a></td>
+						<td><a th:href="@{/invites/{id}/invite(id=${event.id})}" class="button">Invitar</a></td>
+						<td><a class="button" th:href="@{/events/delete/{id}(id=${event.id})}">Borrar</a></td>
+					</tr>
 
-
-                        <td><a class="button" th:href="@{/events/{id}/edit(id=${event.id})}">Editar</a></td>
-                        <td> <a th:href="@{/invites/{id}/invite(id=${event.id})}" class="button">Invitar</a></td>
-                        <td><a class="button" th:href="@{/events/delete/{id}(id=${event.id})}">Borrar</a></td>
-
-
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
+				</tbody>
+			</table>
+		</div>
 
 
 
-        <div class="datos">
-            <table cellpadding="0" cellspacing="0" border="0">
+		<div class="datos">
+			<table cellpadding="0" cellspacing="0" border="0">
 
-                <thead>
-                <h2 >Listado de Inscriptos </h2>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>E-mail</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-        <div>
-            <table cellpadding="0" cellspacing="0" border="0">
-                <tbody>
-                    <tr th:each="registration : ${registrations}">
-                        <td th:text="${registration.user.firstName}"></td>
-                        <td th:text="${registration.user.lastName}"></td>
-                        <td th:text="${registration.user.email}"></td>
+				<thead>
+					<h2>Listado de Inscriptos</h2>
+					<tr>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>E-mail</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div>
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tbody>
+					<tr th:each="registration : ${registrations}">
+						<td th:text="${registration.user.firstName}"></td>
+						<td th:text="${registration.user.lastName}"></td>
+						<td th:text="${registration.user.email}"></td>
 
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 
-        <div class="datos">
-            <table cellpadding="0" cellspacing="0" border="0">
-                <h3>Listado de Invitaciones</h3>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>E-mail</th>
-                        <th></th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-        <div class="datos">
-            <table cellpadding="0" cellspacing="0" border="0">
-                <tbody>
-                    <tr th:each="invite : ${invites}">
-                        <td th:text="${invite.user.firstName}"></td>
-                        <td th:text="${invite.user.lastName}"></td>
-                        <td th:text="${invite.user.email}"></td>
-                        <td> <a class="button" th:href="@{/invites/delete/{id}(id=${invite.id})}">Borrar</a></td>
-                    </tr>
-                </tbody>
+		<div class="datos">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<h3>Listado de Invitaciones</h3>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>E-mail</th>
+						<th></th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="datos">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tbody>
+					<tr th:each="invite : ${invites}">
+						<td th:text="${invite.user.firstName}"></td>
+						<td th:text="${invite.user.lastName}"></td>
+						<td th:text="${invite.user.email}"></td>
+						<td><a class="button"
+							th:href="@{/invites/delete/{id}(id=${invite.id})}">Borrar</a></td>
+					</tr>
+				</tbody>
 
-            </table>        
-        </div>
+			</table>
+		</div>
 	</center>
 
-    </body>
+</body>
 </html>

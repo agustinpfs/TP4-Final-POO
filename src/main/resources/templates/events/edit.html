@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html lang="es">
     <head>
         <title>Edit Event</title>
@@ -70,10 +65,6 @@ div {
 	margin-left: 3rem
 	
 }
-
-/*        		center{ */
-/*        			text-align: center */
-/*        		} */
 </style>
     </head>
 
@@ -90,7 +81,7 @@ div {
 
 				<h2 style= "background: #00bfff; color: white; padding-left:.5em "> Datos del evento</h2>
 
-        <form action="#" th:action="@{/events/{id}/update(id=${event.id})}" th:object="${event}" method="post">
+        <form action="#" th:action="@{/events/update/{id}(id=${event.id})}" th:object="${event}" method="post">
 				<div class="display">
 
 
@@ -137,7 +128,7 @@ div {
             </div>
             <div>
                 <button class="button" type="submit" name="edit_event">Actualizar</button>
-                <a th:href="@{/events/{id}/eventDetails(id=${event.id})}"class="button2">Volver</a>
+                <a th:href="@{/events/eventDetails/{id}(id=${event.id})}"class="button2">Volver</a>
             </div>
 
         </form>

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <title>Users</title>
@@ -9,7 +8,7 @@
     <body>
         <div>
             <h1 >Users List</h1>
-            <table class="table table-dark">
+            <table>
                 <thead>
                     <tr>
                         <th>Email</th>
@@ -24,12 +23,12 @@
                         <td th:text="${user.email}"></td>
                         <td th:text="${user.firstName}"></td>
                         <td th:text="${user.lastName}"></td>
-                        <td><a class="badge" th:href="@{/users/edit/{id}(id=${user.id})}">Edit</a></td>
-                        <td><a class="badge" th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a></td>
+                        <td><a th:href="@{/users/edit/{id}(id=${user.id})}">Edit</a></td>
+                        <td><a th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a></td>
                     </tr>
                 </tbody>
             </table>
-            <a class="badge badge-primary" th:href="@{/users/new}">New User</a>
+            <a th:href="@{/users/new}">New User</a>
         </div>
         
     </body>

@@ -3,12 +3,13 @@
 <html lang="es">
 
 <head>
-	<meta charset="UTF-8">
-	
-	<style type="text/css">
-	html{
-    		font-family: helvetica, arial
-    	}
+<meta charset="UTF-8">
+
+	<style>
+		html {
+			font-family: helvetica, arial
+		}
+		
 		input {
 			width: 300px;
 			margin-bottom: 1.5em;
@@ -17,76 +18,75 @@
 			font-size: 1rem;
 		}
 		
-		.div{
-		display: flex;
-		justify-content: center;
-		width: 100%;
-
-margin-top: 2rem
-		
-		
+		.div {
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			margin-top: 2rem
 		}
-		.button{
-/* 	height: 2rem; */
-/* 	width: 3rem; */
-	padding: .3rem .5rem;
-	text-decoration: none;
-	color: white;
-	background: #0000ff;
-	border:0;
-	font-size: 1.2rem;
-	border-radius: 8px
-	
-}
+		
+		.button {
+			/* 	height: 2rem; */
+			/* 	width: 3rem; */
+			padding: .3rem .5rem;
+			text-decoration: none;
+			color: white;
+			background: #0000ff;
+			border: 0;
+			font-size: 1.2rem;
+			border-radius: 8px
+		}
 	</style>
 
 </head>
 
 
-<body  style="text-align: center">
-        <div class="div">
-        
-        <div>
-        <h1 style= "color: #0000ff ">EventsAPP</h1>
-     
+<body style="text-align: center">
+	<div class="div">
 
-        <br>
-           <h2 style= "background: #00bfff; color: white; padding-left:.5em ">Nuevo Usuario</h2>
-            
-       
-
-            <form  action="#" th:action="@{/users}" th:object="${user}" method="post">
-                 <div>
-                 	<label for="name">Nombre</label>
-                    <input id="firstname" name="firstname" type="text" th:field="*{firstName}" required/> 
-                    
-                </div>
-                <div>
-                	<label for="name">Apellido</label>
-                    <input   id="lastname" name="lastname" type="text" th:field="*{lastName}" required/> 
-                    
-                </div>
-                <div>
-                	<label for="name">E-mail</label>
-                    <input   id="email" name="email" type="email" th:field="*{email}" required/> 
-                    
-                </div>
-                <div>
-                	<label for="name">Contraseña</label>
-                    <input id="password" name="password" type="password" th:field="*{password}" required/> 
-                    
-                </div>
-               
-
-                <p>
-                    <button class="button" type="submit" name="newUser">Crear</button>
-                </p>
+		<div>
+			<h1 style="color: #0000ff">EventsAPP</h1>
 
 
-            </form>
-        </div>
-       </div>
-    </body>
+			<br>
+			<h2 style="background: #00bfff; color: white; padding-left: .5em">Nuevo
+				Usuario</h2>
+
+
+
+			<form action="#" th:action="@{/users}" th:object="${user}"
+				method="post">
+				<div>
+					<label for="name">Nombre</label> <input id="firstname"
+						name="firstname" type="text" th:field="*{firstName}" required />
+
+				</div>
+				<div>
+					<label for="name">Apellido</label> <input id="lastname"
+						name="lastname" type="text" th:field="*{lastName}" required />
+
+				</div>
+				<div>
+					<label for="name">E-mail</label> <input id="email" name="email"
+						type="email" th:field="*{email}" required />
+
+				</div>
+				<div>
+					<label for="name">Contraseña</label> <input id="password"
+						name="password" type="password" th:field="*{password}" required />
+
+				</div>
+
+
+				<p>
+					<button class="button" type="submit" name="newUser">Crear</button>
+				</p>
+
+
+			</form>
+		</div>
+	</div>
+</body>
 </html>
 
 
