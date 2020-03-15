@@ -92,9 +92,9 @@
 					<tr th:each="event : ${events}"> 
 						<!--tabla events generada en entity	 -->
 						<td th:text="${event.eventName}"></td>
-						<td th:text="${event.eventDate}"></td>
-						<td th:text="${event.startRegistrations}"></td>
-						<td th:text="${event.endRegistrations}"></td>
+						<td th:text="${#dates.format(event.eventDate, 'dd-MM-yyyy')}"></td>
+						<td th:text="${#dates.format(event.startRegistrations, 'dd-MM-yyyy' )}"></td>
+						<td th:text="${#dates.format(event.endRegistrations, 'dd-MM-yyyy' )}"></td>
 						<td th:text="${event.lugar}"></td>
 						<td
 							th:text="${event.isAvailable()} == true ? ${event.getAvailability()} : 'Agotado'"></td>

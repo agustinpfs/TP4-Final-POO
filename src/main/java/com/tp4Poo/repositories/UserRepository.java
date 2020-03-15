@@ -10,6 +10,6 @@ import com.tp4Poo.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-    public List<User> findByEmail(String email);
+    public List<User> findUserByEmail(String email);
     
 }

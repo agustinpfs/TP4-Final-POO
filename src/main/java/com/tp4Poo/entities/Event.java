@@ -18,18 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="events")
-@NamedQuery(name = "Event.findEventsByOwnerId",
-query = "SELECT e FROM Event e WHERE e.owner.id =: ownerId ORDER BY e.eventDate ASC"
-
-)
-
-@NamedQuery(name = "Event.findAllEvents",
-query = "SELECT e FROM Event e ORDER BY e.eventDate ASC"
-)
-
-@NamedQuery(name = "Event.findRegistrationsByEventId",  // Esto es para cambiar la coleccion por consulta, preguntar
-query = "SELECT r FROM Registration r WHERE r.event.id =: eventId"
-)
+@NamedQuery(name = "Event.findRegistrationsByEventId",query = "SELECT r FROM Registration r WHERE r.event.id =: eventId")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

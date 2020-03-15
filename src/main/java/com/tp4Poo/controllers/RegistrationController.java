@@ -11,44 +11,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tp4Poo.entities.Event;
 import com.tp4Poo.entities.Invite;
-import com.tp4Poo.entities.Payment;
 import com.tp4Poo.entities.Registration;
-import com.tp4Poo.entities.User;
 import com.tp4Poo.services.EventService;
 import com.tp4Poo.services.InviteService;
-import com.tp4Poo.services.PaymentService;
 import com.tp4Poo.services.RegistrationService;
-import com.tp4Poo.services.SessionService;
-import com.tp4Poo.services.UserService;
+import com.tp4Poo.services.UserLoggedInService;
 
 @Controller
 @RequestMapping("/registrations")
 public class RegistrationController {
 
     @Autowired
-    private RegistrationService registrationService;
+    private RegistrationService registrationS;
 
     @Autowired
-    private EventService eventService;
+    private EventService eventS;
 
     @Autowired
-    private SessionService sessionService;
+    private UserLoggedInService uLoggedInS;
 
     @Autowired
     private InviteService inviteService;
 
     @GetMapping("/myRegistrations")
     public String registrate(Model model) {
-        Long id = sessionService.getCurrentUser().getId();
-        List<Registration> registrations = registrationService.findByUser(id);
+        Long id = uLoggedInS.getCurrentUser().getId();
+        List<Registration> registrations = registrationS.findRegistrationByUser(id);
         model.addAttribute("registrations", registrations);
-        model.addAttribute("currentUser", sessionService.getCurrentUser());
+        model.addAttribute("currentUser", uLoggedInS.getCurrentUser());
         return "registrations/myRegistrations";
     }
 
     @GetMapping("/{id}/registrate")
     public String registrate(@PathVariable Long id, Model model) {
-        Event e = eventService.find(id);
+        Event e = eventS.findEvent(id);
         model.addAttribute("event", e);
         return "registrations/registrate";
     }
@@ -58,20 +54,20 @@ public class RegistrationController {
     public String confirmRegistration(@PathVariable Long id, Model model) throws Exception {
         try {
 
-            Event e = eventService.find(id);
+            Event event = eventS.findEvent(id);
 
-            if (e.isPrivateEvent()) {
-                Invite invite = inviteService.findByUserAndEvent(sessionService.getCurrentUser(), e);
+            if (event.isPrivateEvent()) {
+                Invite invite = inviteService.findInviteByUserAndEvent(uLoggedInS.getCurrentUser(), event);
 
                 if (invite == null) {
                     throw new Exception("Debe tener invitación para este registro");
                 }
             }
 
-            if (e.getCost() > 0) {
+            if (event.getCost() > 0) {
                 return "redirect:/payments/{id}";
             } else {
-                registrationService.create(id);
+                registrationS.addRegistration(id);
                 return "registrations/confirmedRegistration";
             }
 

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="payments")
 
@@ -23,7 +24,7 @@ public class Payment implements Serializable{
  
   
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="userId", referencedColumnName = "id") //"referencedColumnName" especifica otra columna como la columna de identificación predeterminada de la otra tabla
+    @JoinColumn(name="userId", referencedColumnName = "id")
     private User owner;
     
     @ManyToOne(fetch=FetchType.LAZY)

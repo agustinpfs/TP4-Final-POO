@@ -1,28 +1,88 @@
 package com.tp4Poo.services;
 
 
+import java.util.Date;
 import java.util.List;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tp4Poo.entities.Event;
 import com.tp4Poo.entities.Registration;
 import com.tp4Poo.entities.User;
+import com.tp4Poo.repositories.EventRepository;
+import com.tp4Poo.repositories.RegistrationRepository;
+import com.tp4Poo.validation.RegistrationValidator;
+import com.tp4Poo.validation.ValidationDecorator;
 
 
 @Service
-public interface RegistrationService {
+public class RegistrationService {
 
-    public List<Registration> registrations();
+    @Autowired
+    private RegistrationRepository registrationR;
 
-    public void create(Long eventId) throws Exception;
+    @Autowired
+    private EventRepository eventR;
 
-    public Registration find(Long id);
-
-    public void delete(Long id);
-
-    public Registration findByEventAndUser(Event event, User user);
+    @Autowired
+    private RegistrationValidator validator;
     
-    public List<Registration> findByEvent(Event event);
+    @Autowired
+    private ValidationDecorator validatorD;
 
-    public List<Registration> findByUser(Long id);
+    @Autowired
+    private UserLoggedInService uLoggedInS;
+
+    public List<Registration> retrieveAllRegistrations() {
+        return registrationR.findAll();
+
+    }
+
+    @Transactional
+    public void addRegistration(Long eventId) throws Exception {
+        User user = uLoggedInS.getCurrentUser();
+        Event e = eventR.getOne(eventId);
+        Registration reg = new Registration();
+        reg.setEvent(e);
+        reg.setUser(user);
+        Date today = new Date();
+        reg.setCreatedAt(today);
+        validator.validate(reg);
+        validatorD.validate(reg);
+        registrationR.save(reg);
+    }
+
+   
+    public Registration findRegistration(Long id) {
+        return registrationR.findById(id).get();
+    }
+
+    
+    public void deleteRegistration(Long id) {
+        registrationR.deleteById(id);
+    }
+
+   
+    public Registration findRegistrationByEventAndUser(Event event, User user) {
+        List<Registration> registrations = registrationR.findByEventAndUser(event, user);
+        if (registrations.isEmpty()) {
+            return null;
+        } else {
+            return registrations.get(0);
+        }
+    }
+    
+   
+    public List<Registration> findRegistrationByEvent(Event event) {
+        List<Registration> registrations = registrationR.findByEvent(event);
+        return registrations;
+    }
+
+    public List<Registration> findRegistrationByUser(Long id) {
+        List<Registration> registrations = registrationR.findByUserId(id);
+        return registrations;
+    }
+
 }

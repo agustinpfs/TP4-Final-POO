@@ -26,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/login","/logout","/users/new","/users").permitAll()
+                .antMatchers("/","/login","/logout", "/users", "/users/new").permitAll()
                 .and()
                 .formLogin().defaultSuccessUrl("/events");
             
@@ -37,7 +37,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){
-        /**encriptado para que no se guarde plana*/
         return new BCryptPasswordEncoder();
     }
 }

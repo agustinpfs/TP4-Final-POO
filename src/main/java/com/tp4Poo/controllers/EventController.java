@@ -24,7 +24,7 @@ import com.tp4Poo.entities.Registration;
 import com.tp4Poo.services.EventService;
 import com.tp4Poo.services.InviteService;
 import com.tp4Poo.services.PaymentService;
-import com.tp4Poo.services.SessionService;
+import com.tp4Poo.services.UserService;
 
 
 @Controller
@@ -32,44 +32,43 @@ import com.tp4Poo.services.SessionService;
 public class EventController {
 
     @Autowired
-    private EventService eventService;
+    private EventService eventS;
 
     @Autowired
-    private SessionService sessionService;
+    private UserService uLoggedInS;
 
     @Autowired
-    private PaymentService paymentService;
+    private PaymentService paymentS;
 
     @Autowired
-    private InviteService inviteService;
+    private InviteService inviteS;
 
     @GetMapping
     public String index(Model model) {
-        List<Event> events = eventService.events();
+        List<Event> events = eventS.retrieveAllEvents();
         model.addAttribute("events", events);
-        model.addAttribute("currentUser", sessionService.getCurrentUser());
+        model.addAttribute("currentUser", uLoggedInS.currentUser());
         return "events/index";
     }
 
     @GetMapping("/myEvents")
     public String myEvents(Model model) {
-        List<Event> events = eventService.findEventsByOwnerId(sessionService.getCurrentUser().getId());
+        List<Event> events = eventS.findEventsByOwnerId(uLoggedInS.currentUser().getId());
         model.addAttribute("events", events);
-        model.addAttribute("currentUser", sessionService.getCurrentUser());
+        model.addAttribute("currentUser", uLoggedInS.currentUser());
         return "events/myEvents";
     }
 
     @GetMapping("/new")
     public String eventNew(Model model) {
         model.addAttribute("event", new Event());
-        
-        return "events/new";
+        return "events/addEvent";
     }
 
     @PostMapping
-    public String create(@ModelAttribute Event event, Model model) throws Exception {
+    public String createEvent(@ModelAttribute Event event, Model model) throws Exception {
         try {
-            eventService.create(event);
+            eventS.addEvent(event);
             return "redirect:/events/myEvents";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -81,10 +80,10 @@ public class EventController {
     @GetMapping("/{id}/delete")
     public String delete(Model model, @PathVariable("id") Long id) throws Exception {
         try {
-            Event event = eventService.find(id);
-            if (Objects.equals(sessionService.getCurrentUser().getId(), event.getOwner().getId())) {    // Controlo que sea el propio usuario 
-                if (inviteService.findByEvent(event).isEmpty()) {
-                    eventService.delete(id);
+            Event event = eventS.findEvent(id);
+            if (Objects.equals(uLoggedInS.currentUser().getId(), event.getOwner().getId())) {    
+                if (inviteS.findInviteByEvent(event).isEmpty()) {
+                    eventS.delete(id);
                     return "redirect:/events/myEvents";
                 }
                 throw new Exception("No se puede Borrar por que el evento posee invitaciones");
@@ -100,12 +99,12 @@ public class EventController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, Model model) throws Exception {
         try {
-            Event event = eventService.find(id);
-            if (Objects.equals(sessionService.getCurrentUser().getId(), event.getOwner().getId())) {  // Controlo que sea el propio usuario 
+            Event event = eventS.findEvent(id);
+            if (uLoggedInS.currentUser().getId().equals(event.getOwner().getId())) {  
                 model.addAttribute("event", event);
                 return "events/edit";
             }
-            throw new Exception("Permiso denegado usuario invalido");
+            throw new Exception("Usuario invalido");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";
@@ -115,9 +114,9 @@ public class EventController {
     @PostMapping("/{id}/update")
     public String update(Model model, @PathVariable Long id, @ModelAttribute Event event) throws Exception {
         try {
-            Event oldEvent = eventService.find(id);
-            if (Objects.equals(sessionService.getCurrentUser().getId(), oldEvent.getOwner().getId())) {    // Controlo que sea el propio usuario 
-                eventService.update(id, event);
+            Event oldEvent = eventS.findEvent(id);
+            if (uLoggedInS.currentUser().getId().equals(oldEvent.getOwner().getId())) {     
+                eventS.replaceEvent(id, event);
                 return "redirect:/events/myEvents";
             }
 
@@ -131,15 +130,15 @@ public class EventController {
     @GetMapping("/{id}/eventDetails")
     public String detail(@PathVariable Long id, Model model) throws Exception {
         try {
-            Event event = eventService.find(id);
-            if (Objects.equals(sessionService.getCurrentUser().getId(), event.getOwner().getId())) {  // Controlo que sea el propio usuario 
-                List<Invite> invites = inviteService.findByEvent(event);
+            Event event = eventS.findEvent(id);
+            if (uLoggedInS.currentUser().getId().equals(event.getOwner().getId())) { 
+                List<Invite> invites = inviteS.findInviteByEvent(event);
                 model.addAttribute("event", event);
                 model.addAttribute("invites", invites);
-                model.addAttribute("currentUser", sessionService.getCurrentUser());
+                model.addAttribute("currentUser", uLoggedInS.currentUser());
 
                 if (event.getCost() > 0) {
-                    List<Payment> payments = paymentService.findByEvent(event);
+                    List<Payment> payments = paymentS.findPaymentsByEvent(event);
                     model.addAttribute("payments", payments);
                     return "events/eventDetailsPaid";
                 }
@@ -158,8 +157,7 @@ public class EventController {
     
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
-        final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); //La clase SimpleDateFormat nos ayuda a mostrar las fechas en el formato que queramos
-
+        final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(formatter, true));
     }
 

@@ -2,7 +2,6 @@ package com.tp4Poo.controllers;
 
 
 import java.util.List;
-import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,23 +13,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tp4Poo.entities.User;
-import com.tp4Poo.services.SessionService;
+import com.tp4Poo.services.UserLoggedInService;
 import com.tp4Poo.services.UserService;
 
 
 @Controller
-@RequestMapping("/users") //root
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
-    private SessionService sessionService;
+    private UserLoggedInService uLoggedInS;
 
     @Autowired
     private UserService userService;
 
     @GetMapping
     public String index(Model model) {
-        List<User> users = userService.users();
+        List<User> users = userService.retrieveAllUsers();
         model.addAttribute("users", users);
         return "users/index";
     }
@@ -42,9 +41,9 @@ public class UserController {
     }
 
     @PostMapping
-    public String create(Model model, @ModelAttribute User user) throws Exception {
+    public String addUser(Model model, @ModelAttribute User user) throws Exception {
         try {
-            userService.create(user);// crea user con datos del form sign up (usa @ModelAttribute)
+            userService.addUser(user);
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -56,8 +55,8 @@ public class UserController {
     public String delete(Model model, @PathVariable("id") Long id) throws Exception {
         try {
 
-            if (Objects.equals(sessionService.getCurrentUser().getId(), id)) {
-                userService.delete(id);
+            if (uLoggedInS.getCurrentUser().getId().equals(id)) {
+                userService.deleteUser(id);
                 return "redirect:/users";
             }
             throw new Exception("Usuario inválido");
@@ -70,9 +69,8 @@ public class UserController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, Model model, Authentication authentication) throws Exception {
         try{
-        User sessionUser = (User) authentication.getPrincipal();
-        if (Objects.equals(sessionUser.getId(), id)) {
-            User user = userService.find(id);
+        if (uLoggedInS.getCurrentUser().getId().equals(id)) {
+            User user = userService.findUser(id);
             model.addAttribute("user", user);
             return "users/edit";
         }
@@ -87,8 +85,8 @@ public class UserController {
     @PostMapping("/{id}/update")
     public String update(Model model, @PathVariable Long id, @ModelAttribute User user) throws Exception {
         try{
-        if (Objects.equals(sessionService.getCurrentUser().getId(), id)) {
-            userService.update(id, user);
+        if (uLoggedInS.getCurrentUser().getId().equals(id)) {
+            userService.replaceUser(id, user);
             return "redirect:/users";
         }
         throw new Exception("Usuario inválido");
