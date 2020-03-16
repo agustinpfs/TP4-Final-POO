@@ -32,7 +32,7 @@ public class PaymentController {
     public String addPayment(Model model, @PathVariable Long id) {
         model.addAttribute("event", eventS.findEvent(id));
         model.addAttribute("payment", new Payment());
-        return "payments/new";
+        return "payments/newPayment";
     }
 
     @PostMapping("/{eventId}")

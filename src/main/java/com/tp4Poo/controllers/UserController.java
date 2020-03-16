@@ -34,10 +34,10 @@ public class UserController {
         return "users/index";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/newUser")
     public String userNew(Model model) {
         model.addAttribute("user", new User());
-        return "users/new";
+        return "users/newUser";
     }
 
     @PostMapping

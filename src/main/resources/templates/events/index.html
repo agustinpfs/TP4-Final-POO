@@ -103,7 +103,7 @@
 						<td
 							th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
 						<td><a
-							th:href="@{/registrations/{id}/registrate(id=${event.id})}"
+							th:href="@{/registrations/registro/{id}(id=${event.id})}"
 							class="button">Registrarse</a></td>
 					</tr>
 				</tbody>
