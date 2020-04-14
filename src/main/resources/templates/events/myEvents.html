@@ -54,62 +54,62 @@
 </head>
 
 <body>
-	<ul>
-		<li><a href="/events/new">Nuevo Evento</a></li>
-		<li><a th:href="@{/events}">Volver</a></li>
-		<li><a href="/logout">Salir</a></li>
-	</ul>
-	<div class="center">
-		<br> <br> <br> <br> <br>
-		<h1>Mis Eventos</h1>
-		<p>Usuario:</p>
-		<p th:text="${currentUser.email}"></p>
-		<br> <br> <br> <br>
-		<center>
-			<table cellpadding="0" cellspacing="0" border="0">
-				<thead>
-					<tr>
-						<th>Nombre del Evento</th>
-						<th>Fecha del Evento</th>
-						<th>Inicio de Registro</th>
-						<th>Fin de Registo</th>
-						<th>Lugar</th>
-						<th>Disponibles</th>
-						<th>Tipo de evento</th>
-						<th>Costo</th>
-						<th></th>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
-			</table>
-		</center>
-
-	</div>
+<ul>
+	<li><a href="/events/new">Nuevo Evento</a></li>
+	<li><a th:href="@{/events}">Volver</a></li>
+	<li><a href="/logout">Salir</a></li>
+</ul>
+<div class="center">
+	<br> <br> <br> <br> <br>
+	<h1>Mis Eventos</h1>
+	<p>Usuario:</p>
+	<p th:text="${currentUser.email}"></p>
+	<br> <br> <br> <br>
 	<center>
-
-		<table class="center" cellpadding="0" cellspacing="0" border="0">
-			<tbody>
-				<tr th:each="event : ${events}">
-					<td th:text="${event.eventName}"></td>
-					<td th:text="${event.eventDate}"></td>
-					<td th:text="${event.startRegistrations}"></td>
-					<td th:text="${event.endRegistrations}"></td>
-					<td th:text="${event.lugar}"></td>
-
-					<td th:text="${event.isAvailable()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
-					<td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
-					<td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
-
-
-
-					<td><a th:href="@{/events/{id}/eventDetails(id=${event.id})}"
-						class="button">Detalles</a></td>
-					<td><a th:href="@{/invites/{id}/invite(id=${event.id})}"
-						class="button">Invitar</a></td>
-					<td><a th:href="@{/events/delete/{id}(id=${event.id})}"
-						class="button">Eliminiar</a></td>
+		<table cellpadding="0" cellspacing="0" border="0">
+			<thead>
+				<tr>
+					<th>Nombre del Evento</th>
+					<th>Fecha del Evento</th>
+					<th>Inicio de Registro</th>
+					<th>Fin de Registo</th>
+					<th>Lugar</th>
+					<th>Disponibles</th>
+					<th>Tipo de evento</th>
+					<th>Costo</th>
+					<th></th>
+					<th></th>
+					<th></th>
 				</tr>
+			</thead>
+		</table>
+	</center>
+
+</div>
+<center>
+
+	<table class="center" cellpadding="0" cellspacing="0" border="0">
+		<tbody>
+			<tr th:each="event : ${events}">
+				<td th:text="${event.eventName}"></td>
+				<td th:text="${event.eventDate}"></td>
+				<td th:text="${event.startRegistrations}"></td>
+				<td th:text="${event.endRegistrations}"></td>
+				<td th:text="${event.lugar}"></td>
+
+				<td th:text="${event.isAvailable()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
+				<td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
+				<td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
+
+
+
+				<td><a th:href="@{/events/eventDetails/{id}(id=${event.id})}"
+					class="button">Detalles</a></td>
+				<td><a th:href="@{/invites/invite/{id}(id=${event.id})}"
+					class="button">Invitar</a></td>
+				<td><a th:href="@{/events/delete/{id}(id=${event.id})}"
+					class="button">Eliminiar</a></td>
+			</tr>
 			</tbody>
 
 		</table>

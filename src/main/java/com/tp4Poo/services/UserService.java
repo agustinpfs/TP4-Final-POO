@@ -33,8 +33,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User addUser(User user) throws Exception {
-        userV.validate(user);
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        userV.validate(user); //valida si existe ya el usuario (private UserValidator userV);
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword())); //encripta el password
         return userR.save(user);
     }
 

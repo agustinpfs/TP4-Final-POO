@@ -41,7 +41,7 @@ public class PaymentController {
             payment.setOwner(uLoggedInS.getCurrentUser());
             payment.setEvent(eventS.findEvent(eventId));
             paymentS.addPayment(payment);
-            return "registrations/confirmedRegistration";
+            return "registrations/confirmedRegistration"; //La Inscripción se realizó correctamente
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "/error/error";

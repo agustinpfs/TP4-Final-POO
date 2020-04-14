@@ -68,7 +68,7 @@ public class RegistrationController {
                 return "redirect:/payments/{id}";
             } else {
                 registrationS.addRegistration(id);
-                return "registrations/confirmedRegistration";
+                return "registrations/confirmedRegistration"; //La Inscripción se realizó correctamente
             }
 
         } catch (Exception e) {

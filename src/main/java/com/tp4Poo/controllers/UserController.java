@@ -18,7 +18,7 @@ import com.tp4Poo.services.UserService;
 
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/users")//asigna solicitudes HTTP a los métodos, ("/users")->raíz
 public class UserController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public String index(Model model) {
+    public String index(Model model) { //model se usa para pasar valores para representar una vista.
         List<User> users = userService.retrieveAllUsers();
         model.addAttribute("users", users);
         return "users/index";
@@ -40,10 +40,10 @@ public class UserController {
         return "users/newUser";
     }
 
-    @PostMapping
+    @PostMapping //se llama desde newUser.html(th:action="@{/users}" method="post">)
     public String addUser(Model model, @ModelAttribute User user) throws Exception {
         try {
-            userService.addUser(user);
+            userService.addUser(user); //con @ModelAttribute
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());

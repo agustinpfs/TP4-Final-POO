@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     
     }
 
-    @Override
+    @Override //sobreescribe método de WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/","/login","/logout", "/users", "/users/newUser").permitAll()

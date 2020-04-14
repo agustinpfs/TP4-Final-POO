@@ -68,6 +68,8 @@ public class InviteController {
                 List<User> users = userS.retrieveAllUsers();
                 model.addAttribute("users", users);
                 model.addAttribute("eventId", eventId);
+                model.addAttribute("currentUser", uLoggedInS.getCurrentUser());
+
                 return "invites/inviteUsers";
             }
             throw new Exception("Usuario inválido");
