@@ -47,7 +47,7 @@ body,div{
 				<tbody>
 					<tr th:each="user : ${users}">
 					
-					<td th:text="${user.email} == ${currentUser.email} ? "></td>
+<!-- 					<td th:text="${user.email} == ${currentUser.email} ? "></td> -->
 					<td th:text="${user.email}"></td>
 					<td th:text="${user.firstName}"></td>
 					<td th:text="${user.lastName}"></td>
@@ -55,14 +55,7 @@ body,div{
 							th:href="@{/invites/sendInv/{eventId}/{userId}(userId=${user.id},eventId=${eventId})}">Invitar</a></td>
 							
 					
-					
-					
-<!-- 					<p> Usuario: </p><span th:text="${currentUser.email}"></span>							 -->
-<!-- 							.getCurrentUser() -->
-							
-<!-- 						<td th:text="${event.getAvailability()}"></td> -->
-<!-- 						<td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td> -->
-<!-- 						<td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td> -->
+				
 						
 
 					</tr>

@@ -94,7 +94,7 @@ a {
 				<br>
 				<br>
 				<br>
-				<h1>Detalles de los eventos</h1>
+				<h1>Detalle de los eventos</h1>
 				<p>Usuario:</p>
 				<span th:text="${currentUser.email}"></span>
 				<br>
@@ -130,8 +130,8 @@ a {
 						<td th:text="${event.capacity}"></td>
 						<td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
 						<td th:text="${event.isFree()} == true ? 'Gratis' : ${event.getCost()}"></td>
-						<td><a class="button" th:href="@{/events/{id}/edit(id=${event.id})}">Editar</a></td>
-						<td><a th:href="@{/invites/{id}/invite(id=${event.id})}" class="button">Invitar</a></td>
+						<td><a class="button" th:href="@{/events/edit/{id}(id=${event.id})}">Editar</a></td>
+						<td><a th:href="@{/invites/invite/{id}(id=${event.id})}" class="button">Invitar</a></td>
 						<td><a class="button" th:href="@{/events/delete/{id}(id=${event.id})}">Borrar</a></td>
 					</tr>
 
