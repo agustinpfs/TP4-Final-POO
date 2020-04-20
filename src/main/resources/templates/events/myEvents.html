@@ -92,10 +92,10 @@
 		<tbody>
 			<tr th:each="event : ${events}">
 				<td th:text="${event.eventName}"></td>
-				<td th:text="${event.eventDate}"></td>
-				<td th:text="${event.startRegistrations}"></td>
-				<td th:text="${event.endRegistrations}"></td>
-				<td th:text="${event.lugar}"></td>
+						<td th:text="${#dates.format(event.eventDate, 'dd-MM-yyyy')}"></td>
+						<td th:text="${#dates.format(event.startRegistrations, 'dd-MM-yyyy' )}"></td>
+						<td th:text="${#dates.format(event.endRegistrations, 'dd-MM-yyyy' )}"></td>
+						<td th:text="${event.lugar}"></td>
 
 				<td th:text="${event.isAvailable()} == true ? ${event.getAvailability()} : 'Agotado'"></td>
 				<td th:text="${event.privateEvent} == true ? 'Privado' : 'Publico'"></td>
@@ -105,7 +105,7 @@
 
 				<td><a th:href="@{/events/eventDetails/{id}(id=${event.id})}"
 					class="button">Detalles</a></td>
-<td><a th:href="@{/invites/invite/{id}(id=${event.id})}" class="button">Invitar</a></td>
+				<td><a th:href="@{/invites/invite/{id}(id=${event.id})}" class="button">Invitar</a></td>
 				<td><a th:href="@{/events/delete/{id}(id=${event.id})}"
 					class="button">Eliminiar</a></td>
 			</tr>
