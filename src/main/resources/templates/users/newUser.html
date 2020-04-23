@@ -54,8 +54,8 @@
 
 
 
-			<form action="#" th:action="@{/users}" th:object="${user}" method="post"> <!--  ${user} crea la 
-			instancia y la envía al controller-->
+			<form action="#" th:action="@{/users}" th:object="${user}" method="post"> 
+			<!--  ${user} crea la instancia y la envía al controller-->
 				<div>
 					<label for="name">Nombre</label> <input id="firstname"
 						name="firstname" type="text" th:field="*{firstName}" required />
